@@ -31,7 +31,12 @@ public class UnsortedList implements IUnsortedList {
 
 	@Override
 	public void insert(int pValueToInsert) {
-		listItems[sizeOfList++] = pValueToInsert;
+		
+		if (find(pValueToInsert) > -1 && !duplicatesAllowed) {
+			// don't insert
+		} else {
+			listItems[sizeOfList++] = pValueToInsert;
+		}
 	}
 
 	@Override
@@ -46,7 +51,9 @@ public class UnsortedList implements IUnsortedList {
 
 	@Override
 	public void initializeWithRandomData(int pSizeOfList) {
-		
+		for (int n = 0; n < pSizeOfList; ++n) {
+			insert(getRandomNumber(100));
+		}
 	}
 
 	@Override
@@ -74,6 +81,10 @@ public class UnsortedList implements IUnsortedList {
 		
 		return temp;
 		
+	}
+	
+	private int getRandomNumber(int pMaxValue) {
+		return (int) (Math.random() * pMaxValue + 1);
 	}
 	
 }
