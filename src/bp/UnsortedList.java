@@ -51,7 +51,12 @@ public class UnsortedList implements IUnsortedList {
 
 	@Override
 	public int find(int pValueToFind) {
-		return 0;
+		for (int n = 0; n < sizeOfList; ++n) {
+			if (listItems[n] == pValueToFind) {
+				return n;
+			}
+		}
+		return -1;
 	}
 
 	@Override
