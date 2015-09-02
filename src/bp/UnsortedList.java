@@ -122,7 +122,16 @@ public class UnsortedList implements IUnsortedList {
 	}
 	
 	public void bubbleSort() {
-		
+		int temp = 0;
+		for(int i = 0; i < sizeOfList; i++) {
+			for(int j = 0; j < sizeOfList-1; j++) {
+				if(listItems[j] > listItems[j+1]) {
+					temp = listItems[j];
+					listItems[j] = listItems[j+1];
+					listItems[j+1] = temp;
+				}
+			}
+		}
 	}
 	
 }

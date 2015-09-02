@@ -33,7 +33,7 @@ public class Main {
 //        System.out.println(ul);
 //        ul.insert(5);
         
-        ul.selectionSort();
+        ul.bubbleSort();
         System.out.println(ul);
         
         System.out.println(ul.getSizeOfList());
