@@ -9,6 +9,10 @@ public class UnsortedList implements IUnsortedList {
 	
 	private boolean duplicatesAllowed;
 	
+//	public UnsortedList(int pSizeOfList) {
+//		
+//	}
+	
 	@Override
 	public int getSizeOfList() {
 		return this.sizeOfList;
@@ -87,4 +91,33 @@ public class UnsortedList implements IUnsortedList {
 		return (int) (Math.random() * pMaxValue + 1);
 	}
 	
+	public void insertionSort() {
+		int min = listItems[0];
+		for(int i = 0; i < sizeOfList; i++) {
+			for(int j = 1; j < sizeOfList; j++) {
+				if(listItems[j] < min) {
+					min = listItems[j];
+					listItems[j] = listItems[i];
+					
+				}
+			}
+		}
+	}
+	
+	public void selectionSort() {
+		int current = listItems[0];
+		for(int i = 0; i < sizeOfList; i++) {
+			for(int j = i; j < sizeOfList; j++) {
+				if(listItems[j] < current) {
+					current = listItems[j];
+				}
+			}
+			listItems[i] = current;
+			current = listItems[i+1];
+		}
+	}
+	
+	public void bubbleSort() {
+		
+	}
 }

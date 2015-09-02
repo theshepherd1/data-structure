@@ -32,7 +32,11 @@ public class Main {
         ul.deleteAll(6);
         System.out.println(ul);
         ul.insert(5);
+        
+        ul.selectionSort();
         System.out.println(ul);
+        
+        System.out.println(ul.getSizeOfList());
     }
 
 }
