@@ -108,6 +108,8 @@ public class UnsortedList implements IUnsortedList {
 		int curIn = 0;
 		int temp = listItems[curIn];
 		for(int i = 0; i < sizeOfList; i++) {
+			curIn = i;
+			temp = listItems[i];
 			for(int j = i; j < sizeOfList; j++) {
 				if(listItems[j] < listItems[curIn]) {
 					curIn = j;
@@ -116,7 +118,6 @@ public class UnsortedList implements IUnsortedList {
 			temp = listItems[i];
 			listItems[i] = listItems[curIn];
 			listItems[curIn] = temp;
-			curIn = i;
 		}
 	}
 	
