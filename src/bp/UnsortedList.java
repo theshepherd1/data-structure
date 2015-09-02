@@ -3,15 +3,15 @@ package bp;
 import java.util.Arrays;
 
 public class UnsortedList implements IUnsortedList {
-	public static final int MAX_SIZE = 1000;
+	public static final int MAX_SIZE = 10;
 	private int sizeOfList;
 	private int[] listItems = new int[MAX_SIZE];
-	
 	private boolean duplicatesAllowed;
 	
 //	public UnsortedList(int pSizeOfList) {
 //		
 //	}
+	
 	
 	@Override
 	public int getSizeOfList() {
@@ -105,19 +105,23 @@ public class UnsortedList implements IUnsortedList {
 	}
 	
 	public void selectionSort() {
-		int current = listItems[0];
+		int curIn = 0;
+		int temp = listItems[curIn];
 		for(int i = 0; i < sizeOfList; i++) {
 			for(int j = i; j < sizeOfList; j++) {
-				if(listItems[j] < current) {
-					current = listItems[j];
+				if(listItems[j] < listItems[curIn]) {
+					curIn = j;
 				}
 			}
-			listItems[i] = current;
-			current = listItems[i+1];
+			temp = listItems[i];
+			listItems[i] = listItems[curIn];
+			listItems[curIn] = temp;
+			curIn = i;
 		}
 	}
 	
 	public void bubbleSort() {
 		
 	}
+	
 }
