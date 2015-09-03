@@ -3,7 +3,9 @@ package bp;
 import java.util.Arrays;
 
 public class UnsortedList implements IUnsortedList {
-	public static final int MAX_SIZE = 10;
+	
+	// do we want to override the constructor to provide size of the array?
+	public static final int MAX_SIZE = 100;
 	private int sizeOfList;
 	private int[] listItems = new int[MAX_SIZE];
 	private boolean duplicatesAllowed;
@@ -45,18 +47,31 @@ public class UnsortedList implements IUnsortedList {
 
 	@Override
 	public void delete(int pValueToDelete) {
+		//can we use 0's for the trailing spaces?
 		
+		int n = find(pValueToDelete);
+		
+		if(n >= 0) {
+			for(int i = n; i < sizeOfList - 1; i++) {
+				listItems[i] = listItems[i+1];
+			}			
+		} else {
+			//do nothing
+		}
+		listItems[sizeOfList-1] = 0;
 	}
 
 	@Override
 	public void deleteAll(int pValueToDelete) {
-		
+		for(int i = 0; i < sizeOfList; i++) {
+			delete(pValueToDelete);
+		}
 	}
 
 	@Override
 	public void initializeWithRandomData(int pSizeOfList) {
 		for (int n = 0; n < pSizeOfList; ++n) {
-			insert(getRandomNumber(100));
+			insert(getRandomNumber(10));
 		}
 	}
 

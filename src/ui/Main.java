@@ -9,7 +9,7 @@ public class Main {
         
         //allowing dups
         ul.setDuplicatesAllowed(false);
-        ul.initializeWithRandomData(5);
+        ul.initializeWithRandomData(15);
         System.out.println(ul);
 //        ul.insert(10);
 //        ul.insert(10);
@@ -35,6 +35,10 @@ public class Main {
         
         ul.bubbleSort();
         System.out.println(ul);
+        
+        ul.delete(5);
+        System.out.println(ul);
+
         
         System.out.println(ul.getSizeOfList());
     }
