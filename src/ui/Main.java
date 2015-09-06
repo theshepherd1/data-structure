@@ -8,8 +8,8 @@ public class Main {
         UnsortedList ul = new UnsortedList();
         
         //allowing dups
-        ul.setDuplicatesAllowed(false);
-        ul.initializeWithRandomData(15);
+        ul.setDuplicatesAllowed(true);
+        ul.initializeWithRandomData(50);
         System.out.println(ul);
 //        ul.insert(10);
 //        ul.insert(10);
@@ -33,13 +33,24 @@ public class Main {
 //        System.out.println(ul);
 //        ul.insert(5);
         
-        ul.bubbleSort();
-        System.out.println(ul);
+//        ul.bubbleSort();
+//        System.out.println(ul);
+//        
+//        System.out.println(ul.getSizeOfList());
+        
+        System.out.println(ul.find(10));
+        for (int index : ul.findAll(10)) {
+        	if (index != 0) {
+        		System.out.println(index);
+        		}
+        }
         
         ul.delete(5);
         System.out.println(ul);
 
-        
+        System.out.println(ul.getSizeOfList());
+        ul.deleteAll(1);
+        System.out.println(ul);
         System.out.println(ul.getSizeOfList());
     }
 

@@ -4,16 +4,10 @@ import java.util.Arrays;
 
 public class UnsortedList implements IUnsortedList {
 	
-	// do we want to override the constructor to provide size of the array?
 	public static final int MAX_SIZE = 100;
 	private int sizeOfList;
 	private int[] listItems = new int[MAX_SIZE];
 	private boolean duplicatesAllowed;
-	
-//	public UnsortedList(int pSizeOfList) {
-//		
-//	}
-	
 	
 	@Override
 	public int getSizeOfList() {
@@ -54,11 +48,9 @@ public class UnsortedList implements IUnsortedList {
 		if(n >= 0) {
 			for(int i = n; i < sizeOfList - 1; i++) {
 				listItems[i] = listItems[i+1];
-			}			
-		} else {
-			//do nothing
+			}
+			sizeOfList--;
 		}
-		listItems[sizeOfList-1] = 0;
 	}
 
 	@Override
@@ -87,16 +79,25 @@ public class UnsortedList implements IUnsortedList {
 
 	@Override
 	public int[] findAll(int pValueToFind) {
-		return null;
+		int[] indexList = new int[MAX_SIZE];
+		int i = 0;
+		for (int n = 0; n < sizeOfList; n++) {
+			if (listItems[n] == pValueToFind) {
+				indexList[i] = n;
+				i++;
+			} 
+		}
+		
+		return indexList;
 	}
 
 	public String toString() {
 		String temp = "[";
-		for(int n=0;n<sizeOfList;++n) {
+		for(int n = 0; n < sizeOfList-1; ++n) {
 			temp = temp + listItems[n] + ", ";
 		}
 		
-		temp = temp + "]";
+		temp = temp + listItems[sizeOfList-1] + "]";
 		
 		return temp;
 		
@@ -106,18 +107,18 @@ public class UnsortedList implements IUnsortedList {
 		return (int) (Math.random() * pMaxValue + 1);
 	}
 	
-	public void insertionSort() {
-		int min = listItems[0];
-		for(int i = 0; i < sizeOfList; i++) {
-			for(int j = 1; j < sizeOfList; j++) {
-				if(listItems[j] < min) {
-					min = listItems[j];
-					listItems[j] = listItems[i];
-					
-				}
-			}
-		}
-	}
+//	public void insertionSort() {
+//		int min = listItems[0];
+//		for(int i = 0; i < sizeOfList; i++) {
+//			for(int j = 1; j < sizeOfList; j++) {
+//				if(listItems[j] < min) {
+//					min = listItems[j];
+//					listItems[j] = listItems[i];
+//					
+//				}
+//			}
+//		}
+//	}
 	
 	public void selectionSort() {
 		int curIn = 0;
