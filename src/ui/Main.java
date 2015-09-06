@@ -9,7 +9,7 @@ public class Main {
         
         //allowing dups
         ul.setDuplicatesAllowed(true);
-        ul.initializeWithRandomData(50);
+        ul.initializeWithRandomData(100);
         System.out.println(ul);
 //        ul.insert(10);
 //        ul.insert(10);
@@ -45,13 +45,20 @@ public class Main {
         		}
         }
         
-        ul.delete(5);
         System.out.println(ul);
 
         System.out.println(ul.getSizeOfList());
-        ul.deleteAll(1);
         System.out.println(ul);
+        ul.deleteAll(1);
         System.out.println(ul.getSizeOfList());
+        
+        ul.insert(1);
+        System.out.println(ul.getSizeOfList());
+
+        ul.delete(1);
+        System.out.println(ul.getSizeOfList());
+
+
     }
 
 }

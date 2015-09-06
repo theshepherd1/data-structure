@@ -1,13 +1,12 @@
 package bp;
 
-import java.util.Arrays;
-
 public class UnsortedList implements IUnsortedList {
 	
 	public static final int MAX_SIZE = 100;
 	private int sizeOfList;
 	private int[] listItems = new int[MAX_SIZE];
 	private boolean duplicatesAllowed;
+	private int ranUpperBound = 5;
 	
 	@Override
 	public int getSizeOfList() {
@@ -32,7 +31,7 @@ public class UnsortedList implements IUnsortedList {
 	@Override
 	public void insert(int pValueToInsert) {
 		
-		if (find(pValueToInsert) > -1 && !duplicatesAllowed) {
+		if ((find(pValueToInsert) > -1 && !duplicatesAllowed) || sizeOfList == MAX_SIZE) {
 			// don't insert
 		} else {
 			listItems[sizeOfList++] = pValueToInsert;
@@ -41,11 +40,9 @@ public class UnsortedList implements IUnsortedList {
 
 	@Override
 	public void delete(int pValueToDelete) {
-		//can we use 0's for the trailing spaces?
-		
 		int n = find(pValueToDelete);
 		
-		if(n >= 0) {
+		if(n != 0 && sizeOfList > 0) {
 			for(int i = n; i < sizeOfList - 1; i++) {
 				listItems[i] = listItems[i+1];
 			}
@@ -55,15 +52,21 @@ public class UnsortedList implements IUnsortedList {
 
 	@Override
 	public void deleteAll(int pValueToDelete) {
-		for(int i = 0; i < sizeOfList; i++) {
+		while (sizeOfList > 0 && find(pValueToDelete) != -1) {
 			delete(pValueToDelete);
 		}
 	}
 
 	@Override
 	public void initializeWithRandomData(int pSizeOfList) {
-		for (int n = 0; n < pSizeOfList; ++n) {
-			insert(getRandomNumber(10));
+		if (pSizeOfList <= MAX_SIZE && pSizeOfList > 0) {
+			for (int n = 0; n < pSizeOfList; ++n) {
+				insert(getRandomNumber(ranUpperBound));
+			}
+		} else {
+			for (int n = 0; n < MAX_SIZE; ++n) {
+				insert(getRandomNumber(ranUpperBound));
+			}
 		}
 	}
 
