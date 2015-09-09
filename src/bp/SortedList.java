@@ -1,7 +1,7 @@
 package bp;
 
 public class SortedList extends UnsortedList {
-	public final void insert(final int pValueToInsert) {\
+	public final void insert(final int pValueToInsert) {
 		// find where to insert into
 		// make sure not dup if not allowed
 		// push certain elements

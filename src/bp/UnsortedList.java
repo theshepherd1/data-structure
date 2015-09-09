@@ -6,7 +6,7 @@ public class UnsortedList implements IUnsortedList {
 	private int sizeOfList;
 	private int[] listItems = new int[MAX_SIZE];
 	private boolean duplicatesAllowed;
-	private int ranUpperBound = 5;
+	private int ranUpperBound = 15;
 	
 	@Override
 	public int getSizeOfList() {
@@ -42,7 +42,7 @@ public class UnsortedList implements IUnsortedList {
 	public void delete(int pValueToDelete) {
 		int n = find(pValueToDelete);
 		
-		if(n != 0 && sizeOfList > 0) {
+		if(n != -1 && sizeOfList > 0) {
 			for(int i = n; i < sizeOfList - 1; i++) {
 				listItems[i] = listItems[i+1];
 			}
@@ -59,13 +59,16 @@ public class UnsortedList implements IUnsortedList {
 
 	@Override
 	public void initializeWithRandomData(int pSizeOfList) {
+		int n = 0;
 		if (pSizeOfList <= MAX_SIZE && pSizeOfList > 0) {
-			for (int n = 0; n < pSizeOfList; ++n) {
+			while (n < pSizeOfList) {
 				insert(getRandomNumber(ranUpperBound));
+				n = sizeOfList;
 			}
 		} else {
-			for (int n = 0; n < MAX_SIZE; ++n) {
+			while (n < MAX_SIZE) {
 				insert(getRandomNumber(ranUpperBound));
+				n = sizeOfList;
 			}
 		}
 	}
@@ -100,7 +103,11 @@ public class UnsortedList implements IUnsortedList {
 			temp = temp + listItems[n] + ", ";
 		}
 		
-		temp = temp + listItems[sizeOfList-1] + "]";
+		if (sizeOfList > 0) {
+				temp = temp + listItems[sizeOfList-1] + "]";
+		} else {
+			temp = temp + "]";
+		}
 		
 		return temp;
 		
