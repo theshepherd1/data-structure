@@ -5,8 +5,8 @@ public class UnsortedList implements IUnsortedList {
 	public static final int MAX_SIZE = 100;
 	private int sizeOfList;
 	private int[] listItems = new int[MAX_SIZE];
-	private boolean duplicatesAllowed;
-	private int ranUpperBound = 15;
+	protected boolean duplicatesAllowed;
+	protected int ranUpperBound = 15;
 	
 	@Override
 	public int getSizeOfList() {
@@ -113,7 +113,7 @@ public class UnsortedList implements IUnsortedList {
 		
 	}
 	
-	private int getRandomNumber(int pMaxValue) {
+	protected int getRandomNumber(int pMaxValue) {
 		return (int) (Math.random() * pMaxValue + 1);
 	}
 	

@@ -1,11 +1,12 @@
 package ui;
 
+import bp.SortedList;
 import bp.UnsortedList;
 
 public class Main {
 
 public static void main(String[] args) {
-UnsortedList ul = new UnsortedList();
+SortedList ul = new SortedList();
 
 //allowing dups
 
@@ -50,7 +51,7 @@ System.out.println(ul);
 //No dups allowed
 
 //10 points
-ul = new UnsortedList();
+ul = new SortedList();
 ul.setDuplicatesAllowed(false);
 ul.initializeWithRandomData(10);
 System.out.println("Should have 10 random elements without dups");
