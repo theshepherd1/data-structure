@@ -6,7 +6,7 @@ public class UnsortedList implements IUnsortedList {
 	protected int sizeOfList;
 	protected int[] listItems = new int[MAX_SIZE];
 	protected boolean duplicatesAllowed;
-	protected int ranUpperBound = 15;
+	protected int ranUpperBound = 30;
 	
 	@Override
 	public int getSizeOfList() {
@@ -71,6 +71,7 @@ public class UnsortedList implements IUnsortedList {
 				n = sizeOfList;
 			}
 		}
+		
 	}
 
 	@Override
