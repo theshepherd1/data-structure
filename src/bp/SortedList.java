@@ -1,26 +1,30 @@
 package bp;
 
-public class SortedList extends UnsortedList {
-	
-	private int sizeOfList;
-	private int[] listItems = new int[MAX_SIZE];
-	
+public class SortedList extends UnsortedList {	
 	public final void insert(final int pValueToInsert) {
 		
 		int i = 0;
-		if (pValueToInsert == listItems[i] && !super.duplicatesAllowed) {
+		// if dups or dups allowed
+		if (sizeOfList == 0) {
+			sizeOfList++;
+			listItems[0] = pValueToInsert;
+		} else if ((find(pValueToInsert) > -1 && duplicatesAllowed)) {
+			// do nothing
+		} else if (sizeOfList > MAX_SIZE) { // if 
 			// do nothing
 		} else {
-			while(pValueToInsert > listItems[i] && i < sizeOfList) {
+			while (pValueToInsert > listItems[i] && i < sizeOfList) {
 				i++;
 			}
 			
+			sizeOfList++;
+			
+			for (int j = sizeOfList; j > i; j--) {
+				listItems[j] = listItems[j-1];
+			}
+			
+			listItems[i] = pValueToInsert;
 		}
-		
-		// find where to insert into
-		// make sure not dup if not allowed
-		// push certain elements
-		//add value
 	}
 	
 	public void delete(final int pValueToDelete) {
@@ -28,8 +32,21 @@ public class SortedList extends UnsortedList {
 	}
 	
 	public final int find(final int pValueToFind) {
+		int mid = ((int) Math.floor((sizeOfList) / 2));
+		int low = 0;
+		int high = sizeOfList;
+		while (low <= high) {
+			mid = low + (high - low) / 2;
+			
+			if (listItems[mid] == pValueToFind) {
+				return mid;
+			} else if (listItems[mid] < pValueToFind) {
+				low = mid + 1;
+			} else {
+				high = mid - 1;
+			}
+		}
 		
-		
-		return -10;		
+		return -1;
 	}
 }

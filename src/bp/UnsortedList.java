@@ -3,8 +3,8 @@ package bp;
 public class UnsortedList implements IUnsortedList {
 	
 	public static final int MAX_SIZE = 100;
-	private int sizeOfList;
-	private int[] listItems = new int[MAX_SIZE];
+	protected int sizeOfList;
+	protected int[] listItems = new int[MAX_SIZE];
 	protected boolean duplicatesAllowed;
 	protected int ranUpperBound = 15;
 	
