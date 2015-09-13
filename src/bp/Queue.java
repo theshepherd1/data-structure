@@ -4,7 +4,7 @@ public class Queue extends UnsortedList implements IQueue {
 	public static final int MAX_SIZE = 1000;
 	private Data[] dataItems = new Data[MAX_SIZE];
 	private int sizeOfList;
-	private boolean isPriorityQueue;
+	private boolean isPriorityQueue = false;
 
 	@Override
 	public boolean isFull() {
@@ -41,12 +41,26 @@ public class Queue extends UnsortedList implements IQueue {
 
 	@Override
 	public void enqueue(Data dataItem) {
-		if(sizeOfList < MAX_SIZE) {
+		if(sizeOfList == 0) {
+			sizeOfList++;
+			dataItems[sizeOfList-1] = dataItem;
+		}
+		if(sizeOfList < MAX_SIZE && isPriorityQueue == false) {
 			sizeOfList++;
 			for (int i = sizeOfList-1; i > 0; i--) {
 				dataItems[i] = dataItems[i-1];
-			}
+				}
 			dataItems[0] = dataItem;
+		} else if(sizeOfList < MAX_SIZE && isPriorityQueue == true) {
+			sizeOfList++;
+			int i = 0;
+			while(dataItem.getPriority() < dataItems[i].getPriority() && i < sizeOfList-1) {
+				i++;
+			}
+			for(int n = sizeOfList-1; n > i; n--) {
+				dataItems[n] = dataItems[n-1];
+			}
+			dataItems[i] = dataItem;
 		}
 	}
 
