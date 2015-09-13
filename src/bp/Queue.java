@@ -1,10 +1,10 @@
 package bp;
 
-public class Stack extends UnsortedList implements IStack {
+public class Queue extends UnsortedList implements IQueue {
 	public static final int MAX_SIZE = 1000;
 	private Data[] dataItems = new Data[MAX_SIZE];
 	private int sizeOfList;
-	
+	private boolean isPriorityQueue;
 
 	@Override
 	public boolean isFull() {
@@ -25,21 +25,33 @@ public class Stack extends UnsortedList implements IStack {
 	}
 
 	@Override
+	public boolean isPriorityQueue() {
+		return isPriorityQueue;
+	}
+
+	@Override
+	public void setPriorityQueue(boolean pIsPriorityQueue) {
+		isPriorityQueue = pIsPriorityQueue;
+	}
+
+	@Override
 	public void clear() {
-		// should we reinit the array here?
 		sizeOfList = 0;
 	}
 
 	@Override
-	public void push(Data dataItem) {
+	public void enqueue(Data dataItem) {
 		if(sizeOfList < MAX_SIZE) {
-			dataItems[sizeOfList] = dataItem;
 			sizeOfList++;
+			for (int i = sizeOfList-1; i > 0; i--) {
+				dataItems[i] = dataItems[i-1];
+			}
+			dataItems[0] = dataItem;
 		}
 	}
 
 	@Override
-	public Data pop() {
+	public Data dequeue() {
 		if(sizeOfList > 0) {
 			sizeOfList--;
 			return dataItems[sizeOfList];
@@ -54,5 +66,4 @@ public class Stack extends UnsortedList implements IStack {
 		}
 		return null;
 	}
-
 }
