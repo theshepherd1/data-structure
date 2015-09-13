@@ -2,6 +2,8 @@ package ui;
 
 import java.util.Stack;
 
+import bp.Data;
+
 public class Main {
 
 	public static void main(String[] args) {
