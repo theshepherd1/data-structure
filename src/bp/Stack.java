@@ -1,59 +1,58 @@
 package bp;
 
-/**
- * Basic interface that all lists will implement.
- * 
- * @author cberkstresser
- * 
- */
-public interface Stack {
-	/**
-	 * 
-	 * @return True if the list is full.
-	 */
-	boolean isFull();
+public class Stack implements IStack {
+	public static final int MAX_SIZE = 1000;
+	private Data[] dataItems = new Data[MAX_SIZE];
+	private int sizeOfList;
+	
 
-	/**
-	 * 
-	 * @return Returns the actual size of the list.
-	 */
-	int getSize();
+	@Override
+	public boolean isFull() {
+		if(MAX_SIZE == getSize()) {
+			return true;
+		}
+		return false;
+	}
 
-	/**
-	 * 
-	 * @return Returns the maximum capacity of the list.
-	 */
-	int getCapacity();
+	@Override
+	public int getSize() {
+		return sizeOfList;
+	}
 
-	/**
-	 * Clears the array to an initialized, size=0 state.
-	 */
-	void clear();
+	@Override
+	public int getCapacity() {
+		return MAX_SIZE;
+	}
 
-	/**
-	 * Inserts an item in the list.
-	 * 
-	 * @param dataItem
-	 *            The item to insert into the list.
-	 */
-	void push(Data dataItem);
+	@Override
+	public void clear() {
+		// should we reinit the array here?
+		sizeOfList = 0;
+	}
 
-	/**
-	 * 
-	 * @return Removes the last item pushed onto the stack back to the user.
-	 */
-	Data pop();
+	@Override
+	public void push(Data dataItem) {
+		if(sizeOfList < MAX_SIZE) {
+			dataItems[sizeOfList] = dataItem;
+			sizeOfList++;
+		}
+	}
 
-	/**
-	 * 
-	 * @return Shows the last item pushed onto the stack without removing it
-	 *         from the stack.
-	 */
-	Data peek();
+	@Override
+	public Data pop() {
+		if(sizeOfList > 0) {
+			sizeOfList--;
+			return dataItems[sizeOfList];
+		}
+		return null;
+	}
 
-	/**
-	 * 
-	 * @return Convert the list to a string.
-	 */
-	String toString();
+	@Override
+	public Data peek() {
+		if(sizeOfList > 0) {
+			return dataItems[sizeOfList-1];
+		}
+		return null;
+	}
+
 }

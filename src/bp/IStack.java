@@ -6,7 +6,7 @@ package bp;
  * @author cberkstresser
  * 
  */
-public interface Queue {
+public interface IStack {
 	/**
 	 * 
 	 * @return True if the list is full.
@@ -26,19 +26,6 @@ public interface Queue {
 	int getCapacity();
 
 	/**
-	 * 
-	 * @return Returns whether this queue should consider priority.
-	 */
-	boolean isPriorityQueue();
-
-	/**
-	 * 
-	 * @param pIsPriorityQueue
-	 *            Sets whether this queue is a priority queue.
-	 */
-	void setPriorityQueue(boolean pIsPriorityQueue);
-
-	/**
 	 * Clears the array to an initialized, size=0 state.
 	 */
 	void clear();
@@ -49,13 +36,13 @@ public interface Queue {
 	 * @param dataItem
 	 *            The item to insert into the list.
 	 */
-	void enqueue(Data dataItem);
+	void push(Data dataItem);
 
 	/**
 	 * 
 	 * @return Removes the last item pushed onto the stack back to the user.
 	 */
-	Data dequeue();
+	Data pop();
 
 	/**
 	 * 
