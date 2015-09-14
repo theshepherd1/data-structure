@@ -106,14 +106,10 @@ public interface ISortedList {
 	/**
 	 * Hmmm. This is interesting. I wonder what it is?
 	 */
-	default void bubbleSort() {
-		throw new UnsupportedOperationException("Bubble sort not implemented yet!");
-	}
+	 void bubbleSort();
 
 	/**
 	 * Hmmm. This is interesting. I wonder what it is?
 	 */
-	default void selectionSort() {
-		throw new UnsupportedOperationException("Selection sort not implemented yet!");
-	}
+	void selectionSort();
 }

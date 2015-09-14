@@ -8,27 +8,22 @@ public class UnsortedList implements IUnsortedList {
 	private boolean duplicatesAllowed;
 	private int ranUpperBound = 15;
 	
-	@Override
 	public int getSizeOfList() {
 		return this.sizeOfList;
 	}
 
-	@Override
 	public boolean areDuplicatesAllowed() {
 		return duplicatesAllowed;
 	}
 
-	@Override
 	public void setDuplicatesAllowed(boolean pDuplicatesAllowed) {
 		duplicatesAllowed = pDuplicatesAllowed;
 	}
 
-	@Override
 	public void clear() {
 		sizeOfList = 0;
 	}
 
-	@Override
 	public void insert(int pValueToInsert) {
 		
 		if ((find(pValueToInsert) > -1 && !duplicatesAllowed) || sizeOfList == MAX_SIZE) {
@@ -38,7 +33,6 @@ public class UnsortedList implements IUnsortedList {
 		}
 	}
 
-	@Override
 	public void delete(int pValueToDelete) {
 		int n = find(pValueToDelete);
 		
@@ -50,14 +44,12 @@ public class UnsortedList implements IUnsortedList {
 		}
 	}
 
-	@Override
 	public void deleteAll(int pValueToDelete) {
 		while (sizeOfList > 0 && find(pValueToDelete) != -1) {
 			delete(pValueToDelete);
 		}
 	}
 
-	@Override
 	public void initializeWithRandomData(int pSizeOfList) {
 		int n = 0;
 		if (pSizeOfList <= MAX_SIZE && pSizeOfList > 0) {
@@ -73,7 +65,6 @@ public class UnsortedList implements IUnsortedList {
 		}
 	}
 
-	@Override
 	public int find(int pValueToFind) {
 		for (int n = 0; n < sizeOfList; ++n) {
 			if (listItems[n] == pValueToFind) {
@@ -83,7 +74,6 @@ public class UnsortedList implements IUnsortedList {
 		return -1;
 	}
 
-	@Override
 	public int[] findAll(int pValueToFind) {
 		int[] indexList = new int[MAX_SIZE];
 		int i = 0;

@@ -6,7 +6,7 @@ public class Queue extends UnsortedList implements IQueue {
 	private int sizeOfList;
 	private boolean isPriorityQueue = false;
 
-	@Override
+	
 	public boolean isFull() {
 		if(MAX_SIZE == getSize()) {
 			return true;
@@ -14,32 +14,32 @@ public class Queue extends UnsortedList implements IQueue {
 		return false;
 	}
 
-	@Override
+	
 	public int getSize() {
 		return sizeOfList;
 	}
 
-	@Override
+	
 	public int getCapacity() {
 		return MAX_SIZE;
 	}
 
-	@Override
+	
 	public boolean isPriorityQueue() {
 		return isPriorityQueue;
 	}
 
-	@Override
+	
 	public void setPriorityQueue(boolean pIsPriorityQueue) {
 		isPriorityQueue = pIsPriorityQueue;
 	}
 
-	@Override
+	
 	public void clear() {
 		sizeOfList = 0;
 	}
 
-	@Override
+	
 	public void enqueue(Data dataItem) {
 		if(sizeOfList == 0) {
 			sizeOfList++;
@@ -64,7 +64,7 @@ public class Queue extends UnsortedList implements IQueue {
 		}
 	}
 
-	@Override
+	
 	public Data dequeue() {
 		if(sizeOfList > 0) {
 			sizeOfList--;
@@ -73,7 +73,7 @@ public class Queue extends UnsortedList implements IQueue {
 		return null;
 	}
 
-	@Override
+	
 	public Data peek() {
 		if(sizeOfList > 0) {
 			return dataItems[sizeOfList-1];
