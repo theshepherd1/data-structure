@@ -51,5 +51,16 @@ public class Stack extends UnsortedList implements IStack {
 		}
 		return null;
 	}
+	
+	public String toString() {
+		String temp = "Stack: [";
+		for(int i = 0; i < sizeOfList - 1; i++) {
+			temp = temp + dataItems[i] + ", ";
+		}
+		temp = temp + (sizeOfList > 0 ? dataItems[sizeOfList-1] : ""); 
+		temp = temp + "]";
+		
+		return temp;
+	}
 
 }

@@ -44,8 +44,7 @@ public class Queue extends UnsortedList implements IQueue {
 		if(sizeOfList == 0) {
 			sizeOfList++;
 			dataItems[sizeOfList-1] = dataItem;
-		}
-		if(sizeOfList < MAX_SIZE && isPriorityQueue == false) {
+		} else if(sizeOfList < MAX_SIZE && isPriorityQueue == false) {
 			sizeOfList++;
 			for (int i = sizeOfList-1; i > 0; i--) {
 				dataItems[i] = dataItems[i-1];
@@ -54,7 +53,7 @@ public class Queue extends UnsortedList implements IQueue {
 		} else if(sizeOfList < MAX_SIZE && isPriorityQueue == true) {
 			sizeOfList++;
 			int i = 0;
-			while(dataItem.getPriority() < dataItems[i].getPriority() && i < sizeOfList-1) {
+			while(i < sizeOfList-1 && dataItem.getPriority() < dataItems[i].getPriority()) {
 				i++;
 			}
 			for(int n = sizeOfList-1; n > i; n--) {
@@ -79,5 +78,16 @@ public class Queue extends UnsortedList implements IQueue {
 			return dataItems[sizeOfList-1];
 		}
 		return null;
+	}
+	
+	public String toString() {
+		String temp = isPriorityQueue ? "Priority Queue: [" : "Normal Queue: [";
+		for(int i = 0; i < sizeOfList - 1; i++) {
+			temp = temp + dataItems[i] + ", ";
+		}
+		temp = temp + (sizeOfList > 0 ? dataItems[sizeOfList-1] : ""); 
+		temp = temp + "]";
+		
+		return temp;
 	}
 }
