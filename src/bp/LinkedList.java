@@ -83,5 +83,41 @@ public class LinkedList implements ILinkedList {
 		
 		return removedData;
 	}
+	/*
+	 * Stack will push/pop from right.
+	 * Queue will start from left and end on right. 
+	 */
+	
+	//push from left. so insert left
+	public void push(Link link) {
+		insertRight(link);
+	}
+	
+	public Link pop() {
+		Link link = new Link();
+		link.setData(removeRight());
+		return link;
+	}
+	
+	public void enqueue(Link link) {
+		insertLeft(link);
+	}
+	
+	public Link dequeue() {
+		Link link = new Link();
+		link.setData(removeRight());
+		return link;
+	}
+	
+	public String toString() {
+		String s = "[";
+		Link link = first;
+		while(link != null && link.getNext() != null) {
+			s += link.getData().toString();
+			link = link.getNext();
+		}
+		s += "]";
+		return s;
+	}
 
 }
