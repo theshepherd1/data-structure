@@ -5,43 +5,47 @@ public class LinkedList implements ILinkedList {
 	private Link last;
 	
 	public boolean isEmpty() {
-		// TODO Auto-generated method stub
 		return first == null;
 	}
 
 	public void clear() {
-		// TODO Auto-generated method stub
 		first = last = null;
 	}
 
 	public int getSize() {
-		// TODO Auto-generated method stub
+		if (first != null) {
+			int i = 1;
+			Link link = first;
+			while(link.getNext() != null) {
+				link = link.getNext();
+				i++;
+			}
+			return i;
+		}
 		return 0;
 	}
 
 	public Link getFirst() {
-		// TODO Auto-generated method stub
-		return null;
+		return first;
 	}
 
 	public void setFirst(Link pFirst) {
-		// TODO Auto-generated method stub
-
+		first = pFirst;
 	}
 
 	public Link getLast() {
-		// TODO Auto-generated method stub
-		return null;
+		return last;
 	}
 
 	public void setLast(Link pLast) {
-		// TODO Auto-generated method stub
-
+		last = pLast;
 	}
 
+	// should you make this method private, since you will call this in insertLeft(Data)?
 	public void insertLeft(Link linkToInsert) {
-		// TODO Auto-generated method stub
-
+		linkToInsert.setNext(first);
+		first.setPrevious(linkToInsert);
+		setFirst(linkToInsert);
 	}
 
 	public void insertLeft(Data dataToInsert) {
@@ -51,23 +55,33 @@ public class LinkedList implements ILinkedList {
 	}
 
 	public void insertRight(Link linkToInsert) {
-		// TODO Auto-generated method stub
-
+		linkToInsert.setPrevious(last);
+		last.setNext(linkToInsert);
+		setLast(linkToInsert);
 	}
 
 	public void insertRight(Data dataToInsert) {
-		// TODO Auto-generated method stub
-
+		Link linkToInsert = new Link();
+		linkToInsert.setData(dataToInsert);
+		insertRight(linkToInsert);
 	}
-
+	
+	// does this mean remove the current first and set a new first?
 	public Data removeLeft() {
-		// TODO Auto-generated method stub
-		return null;
+		Data removedData = first.getData();
+		
+		setFirst(first.getNext());
+		
+		// will it return a reference or a copy of the object?
+		return removedData;
 	}
 
 	public Data removeRight() {
-		// TODO Auto-generated method stub
-		return null;
+		Data removedData = first.getData();
+		
+		setLast(first.getPrevious());
+		
+		return removedData;
 	}
 
 }
