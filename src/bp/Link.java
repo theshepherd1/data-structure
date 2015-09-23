@@ -18,7 +18,7 @@ public class Link {
 		return previous;
 	}
 
-	public void setPrevious(Link previous) {
+	public void setPrevious(Link previous) {		
 		this.previous = previous;
 	}
 
@@ -29,5 +29,4 @@ public class Link {
 	public void setData(Data data) {
 		this.data = data;
 	}
-
 }

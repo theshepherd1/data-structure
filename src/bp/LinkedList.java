@@ -30,7 +30,11 @@ public class LinkedList implements ILinkedList {
 	}
 
 	public void setFirst(Link pFirst) {
+		if(isEmpty()) {
+			last = pFirst;
+		}
 		first = pFirst;
+		first.setPrevious(null);
 	}
 
 	public Link getLast() {
@@ -38,13 +42,18 @@ public class LinkedList implements ILinkedList {
 	}
 
 	public void setLast(Link pLast) {
+		if(isEmpty()) {
+			first = pLast;
+		}
 		last = pLast;
+		last.setNext(null);
 	}
 
-	// should you make this method private, since you will call this in insertLeft(Data)?
 	public void insertLeft(Link linkToInsert) {
-		linkToInsert.setNext(first);
-		first.setPrevious(linkToInsert);
+		if(first != null) {
+			linkToInsert.setNext(first);
+			first.setPrevious(linkToInsert);
+		}
 		setFirst(linkToInsert);
 	}
 
@@ -55,8 +64,10 @@ public class LinkedList implements ILinkedList {
 	}
 
 	public void insertRight(Link linkToInsert) {
-		linkToInsert.setPrevious(last);
-		last.setNext(linkToInsert);
+		if(last != null) {
+			linkToInsert.setPrevious(last);
+			last.setNext(linkToInsert);
+		}
 		setLast(linkToInsert);
 	}
 
@@ -66,22 +77,26 @@ public class LinkedList implements ILinkedList {
 		insertRight(linkToInsert);
 	}
 	
-	// does this mean remove the current first and set a new first?
 	public Data removeLeft() {
-		Data removedData = first.getData();
-		
-		setFirst(first.getNext());
-		
-		// will it return a reference or a copy of the object?
-		return removedData;
+		if(!isEmpty() && first != last) {
+			Data removedData = first.getData();
+			setFirst(first.getNext());
+			return removedData;
+		} else if (first == last) {
+			clear();
+		}
+		return null;
 	}
 
 	public Data removeRight() {
-		Data removedData = first.getData();
-		
-		setLast(first.getPrevious());
-		
-		return removedData;
+		if(!isEmpty() && last != first) {
+			Data removedData = last.getData();
+			setLast(last.getPrevious());
+			return removedData;
+		} else if (last == first) {
+			clear();
+		}
+		return null;
 	}
 	/*
 	 * Stack will push/pop from right.
@@ -112,9 +127,12 @@ public class LinkedList implements ILinkedList {
 	public String toString() {
 		String s = "[";
 		Link link = first;
-		while(link != null && link.getNext() != null) {
+		if (link != null) {
+			while(link.getNext() != null) {
+				s += link.getData().toString();
+				link = link.getNext();
+			}
 			s += link.getData().toString();
-			link = link.getNext();
 		}
 		s += "]";
 		return s;
