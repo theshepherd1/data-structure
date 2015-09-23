@@ -111,5 +111,24 @@ public class Main {
 		myLL.removeLeft();
 		myLL.removeRight();
 
+		myLL.push(link4);
+		myLL.push(link3);
+		myLL.push(link2);
+		myLL.push(link1);
+
+		
+		System.out.println(myLL.toString());
+
+		myLL.pop();
+		myLL.pop();
+
+		System.out.println(myLL.toString());
+
+		myLL.enqueue(link5);
+		myLL.dequeue();
+		
+		System.out.println(myLL.toString());
+
+		
 	}
 }
