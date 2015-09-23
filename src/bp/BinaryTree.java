@@ -68,5 +68,18 @@ public class BinaryTree implements IBinaryTree {
 	public void setRootNode(Node rootNode) {
 		this.rootNode = rootNode;
 	}
+	
+	public String toString() {
+		return toString(rootNode);
+	}
+	
+	private String toString(Node nodeToString) {
+		if (nodeToString == null) {
+			return "";
+		} else {
+			return toString(rootNode.getLeftChild()) + ", " + rootNode.getDate() + ", "
+					+ toString(rootNode.getRightChild());
+		}
+	}
 
 }
