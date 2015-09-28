@@ -9,11 +9,10 @@ public class BinaryTree implements IBinaryTree {
 	@Override
 	public LocalDate showMinimumValue() {
 		if (rootNode == null) {
-			return LocalDate.of(0001, 1, 1);
+			return LocalDate.MIN;
 		} else {
-			LocalDate minimumValue = rootNode.getDate();
 			Node currentNode = rootNode;
-			while (rootNode.getLeftChild() != null) {
+			while (currentNode.getLeftChild() != null) {
 				currentNode = currentNode.getLeftChild();
 			}
 			return currentNode.getDate();
@@ -22,8 +21,15 @@ public class BinaryTree implements IBinaryTree {
 
 	@Override
 	public LocalDate showMaximumValue() {
-		// TODO Auto-generated method stub
-		return null;
+		if (rootNode == null) {
+			return LocalDate.MAX;
+		} else {
+			Node currentNode = rootNode;
+			while (currentNode.getRightChild() != null) {
+				currentNode = currentNode.getRightChild();
+			}
+			return currentNode.getDate();
+		}
 	}
 
 	@Override
@@ -33,22 +39,49 @@ public class BinaryTree implements IBinaryTree {
 
 	@Override
 	public int getSize() {
-		// TODO Auto-generated method stub
-		return 0;
+		return size(rootNode);
+	}
+	
+	private int size(Node node) {
+		if(node == null) {
+			return 0;
+		} else {
+			return size(node.getLeftChild()) + size(node.getRightChild()) + 1;
+		}
 	}
 
 	@Override
 	public void clear() {
-		// TODO Auto-generated method stub
-
+		rootNode = null;
 	}
 
 	@Override
 	public void insert(LocalDate valueToInsert) {
-		// TODO Auto-generated method stub
-
+		if (rootNode == null) {
+			rootNode.setDate(valueToInsert);
+		} else {
+			insert_(rootNode, valueToInsert);
+		}
 	}
 
+	private void insert_(Node node, LocalDate date) {
+		// not considering duplicates
+		if (date.compareTo(node.getDate()) < 0) {
+			if (node.getLeftChild() == null) {
+				node.setLeftChild(new Node(date));
+			} else {
+				insert_(node.getLeftChild(), date);
+			}
+		} else if (date.compareTo(node.getDate()) > 0) {
+			if (node.getRightChild() == null) {
+				node.setRightChild(new Node(date));
+			} else {
+				insert_(node.getRightChild(), date);
+			}
+		}
+		
+	}
+	
 	@Override
 	public void delete(LocalDate valueToDelete) {
 		// TODO Auto-generated method stub

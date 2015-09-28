@@ -4,40 +4,52 @@ import java.time.LocalDate;
 
 public class Node implements IBinaryTreeNode {
 
+	private Node parent;
+	private Node leftChild;
+	private Node rightChild;
+	
+	private LocalDate date;
+	
+	public Node(LocalDate pDate) {
+		setDate(pDate);
+	}
+	
 	@Override
 	public LocalDate getDate() {
-		// TODO Auto-generated method stub
-		return null;
+		return date;
 	}
 
 	@Override
 	public void setDate(LocalDate pDate) {
-		// TODO Auto-generated method stub
-
+		date = pDate;
 	}
 
 	@Override
 	public Node getLeftChild() {
-		// TODO Auto-generated method stub
-		return null;
+		return leftChild;
 	}
 
 	@Override
 	public void setLeftChild(Node pLeftChild) {
-		// TODO Auto-generated method stub
-
+		leftChild = pLeftChild;
 	}
 
 	@Override
 	public Node getRightChild() {
-		// TODO Auto-generated method stub
-		return null;
+		return rightChild;
 	}
 
 	@Override
 	public void setRightChild(Node pRightChild) {
-		// TODO Auto-generated method stub
-
+		rightChild = pRightChild;
 	}
 
+	public Node getParent() {
+		return parent;
+	}
+
+	public void setParent(Node parent) {
+		this.parent = parent;
+	}
+	
 }
