@@ -32,6 +32,7 @@ public class Node implements IBinaryTreeNode {
 	@Override
 	public void setLeftChild(Node pLeftChild) {
 		leftChild = pLeftChild;
+		leftChild.setParent(this);
 	}
 
 	@Override
@@ -42,6 +43,7 @@ public class Node implements IBinaryTreeNode {
 	@Override
 	public void setRightChild(Node pRightChild) {
 		rightChild = pRightChild;
+		rightChild.setParent(this);
 	}
 
 	public Node getParent() {

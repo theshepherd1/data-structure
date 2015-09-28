@@ -79,21 +79,71 @@ public class BinaryTree implements IBinaryTree {
 				insert_(node.getRightChild(), date);
 			}
 		}
-		
 	}
 	
 	@Override
 	public void delete(LocalDate valueToDelete) {
-		// TODO Auto-generated method stub
-
+		Node node = find(valueToDelete);
+		Node parentNode = node.getParent();
+		boolean isRight  = false;
+		
+		// determine which side it's on
+		if (node.getDate().compareTo(parentNode.getDate()) > 0) {
+			isRight = true;
+		} else {
+			isRight = false;
+		}
+		
+		// node deleting has no child
+		if (node.getLeftChild() == null && node.getRightChild() == null) {
+			if (isRight) {
+				parentNode.setRightChild(null);
+			} else {
+				parentNode.setLeftChild(null);
+			}
+			node.setParent(null);
+			node = null;
+		} else if (node.getLeftChild() == null) {
+			parentNode.setLeftChild(node.getLeftChild());
+			node.setParent(null);
+			node = null;
+		} else if (node.getRightChild() == null) {
+			
+		} else {
+			
+		}
+		// node deleting has one child : replace it with its child
+		
+		
+		//node deleting has two children: replace it with the leftest child of its right child, then make its left child the new left child of the new node
+		
 	}
 
+	
+	// can use recursion?
 	@Override
 	public Node find(LocalDate valueToFind) {
-		// TODO Auto-generated method stub
+		Node current = rootNode;
+		while (current.getDate().compareTo(valueToFind) != 0) {
+			if (valueToFind.compareTo(current.getDate()) < 0) {
+				if (current.getLeftChild() == null) {
+					return null;
+				} else {
+					current = current.getLeftChild();
+				}
+			} else if (valueToFind.compareTo(current.getDate()) > 0) {
+				if (current.getRightChild() == null) {
+					return null;
+				} else {
+					current = current.getRightChild();
+				}
+			} else {
+				return current;
+			}
+		}
 		return null;
 	}
-
+	
 	public Node getRootNode() {
 		return rootNode;
 	}
