@@ -10,10 +10,6 @@ public class Node implements IBinaryTreeNode {
 	
 	private LocalDate date;
 	
-	public Node(LocalDate pDate) {
-		setDate(pDate);
-	}
-	
 	@Override
 	public LocalDate getDate() {
 		return date;

@@ -5,6 +5,7 @@ import java.time.LocalDate;
 public class BinaryTree implements IBinaryTree {
 
 	private Node rootNode;
+	int size = 0;
 	
 	@Override
 	public LocalDate showMinimumValue() {
@@ -39,7 +40,7 @@ public class BinaryTree implements IBinaryTree {
 
 	@Override
 	public int getSize() {
-		return size(rootNode);
+		return size;
 	}
 	
 	private int size(Node node) {
@@ -58,68 +59,144 @@ public class BinaryTree implements IBinaryTree {
 	@Override
 	public void insert(LocalDate valueToInsert) {
 		if (rootNode == null) {
+			rootNode = new Node();
 			rootNode.setDate(valueToInsert);
+			size++;
 		} else {
-			insert_(rootNode, valueToInsert);
+			insertMe(rootNode, valueToInsert);
+			size++;
 		}
 	}
 
-	private void insert_(Node node, LocalDate date) {
+	private void insertMe(Node node, LocalDate date) {
 		// not considering duplicates
 		if (date.compareTo(node.getDate()) < 0) {
 			if (node.getLeftChild() == null) {
-				node.setLeftChild(new Node(date));
+				Node newNode = new Node();
+				newNode.setDate(date);
+				node.setLeftChild(newNode);
 			} else {
-				insert_(node.getLeftChild(), date);
+				insertMe(node.getLeftChild(), date);
 			}
 		} else if (date.compareTo(node.getDate()) > 0) {
 			if (node.getRightChild() == null) {
-				node.setRightChild(new Node(date));
+				Node newNode = new Node();
+				newNode.setDate(date);
+				node.setRightChild(newNode);
 			} else {
-				insert_(node.getRightChild(), date);
+				insertMe(node.getRightChild(), date);
 			}
 		}
 	}
 	
 	@Override
 	public void delete(LocalDate valueToDelete) {
+		// node : node to be deleted
 		Node node = find(valueToDelete);
-		Node parentNode = node.getParent();
-		boolean isRight  = false;
+		Node parentNode;
+		boolean onRight  = false;
+
+		parentNode = node.getParent() == null ? node.getParent() : null;
 		
-		// determine which side it's on
-		if (node.getDate().compareTo(parentNode.getDate()) > 0) {
-			isRight = true;
-		} else {
-			isRight = false;
-		}
-		
-		// node deleting has no child
-		if (node.getLeftChild() == null && node.getRightChild() == null) {
-			if (isRight) {
-				parentNode.setRightChild(null);
+		if (node != null && parentNode != null) {
+			// determine which side it's on
+			if (node.getDate().compareTo(parentNode.getDate()) > 0) {
+				onRight = true;
 			} else {
-				parentNode.setLeftChild(null);
+				onRight = false;
 			}
+			
+			// node deleting has no child
+			// node deleting has one child : replace it with its child on either side
+			//node deleting has two children: replace it with the leftest child of its right child, then make its left child the new left child of the new node	
+			if (node.getLeftChild() == null && node.getRightChild() == null) {
+				if (onRight && parentNode != null) {
+					parentNode.setRightChild(null);
+				} else if (!onRight && parentNode != null){
+					parentNode.setLeftChild(null);
+				}
+				node.setParent(null);
+				node = null;
+			} else if (node.getLeftChild() == null) {
+				if (onRight && parentNode != null) {
+					parentNode.setRightChild(node.getRightChild());
+				} else if (!onRight && parentNode != null){
+					parentNode.setLeftChild(node.getRightChild());
+				}
+				node.setParent(null);
+				node = null;
+			} else if (node.getRightChild() == null) {
+				if (onRight && parentNode != null) {
+					parentNode.setRightChild(node.getLeftChild());
+				} else if (!onRight && parentNode != null){
+					parentNode.setLeftChild(node.getLeftChild());
+				}
+				node.setParent(null);
+				node = null;
+			} else {
+				Node current = node.getRightChild();
+				while (current.getLeftChild() != null) {
+					current = current.getLeftChild();
+				}
+				// replace node to be deleted with current
+				Node newNode = new Node();
+				newNode.setDate(current.getDate());
+				if (onRight) {
+					node.getParent().setRightChild(newNode);
+					delete(current.getDate());
+					node.setParent(null);
+					node = null;
+				} else {
+					node.getParent().setLeftChild(newNode);
+					delete(current.getDate());
+					node.setParent(null);
+					node = null;
+				}
+			}
+			size--;
+		} else if (node != null && node.equals(rootNode)) {
 			node.setParent(null);
 			node = null;
 		} else if (node.getLeftChild() == null) {
-			parentNode.setLeftChild(node.getLeftChild());
+			if (onRight && parentNode != null) {
+				setRootNode(node.getRightChild());
+			} else if (!onRight && parentNode != null){
+				setRootNode(node.getRightChild());
+			}
 			node.setParent(null);
 			node = null;
 		} else if (node.getRightChild() == null) {
-			
+			if (onRight && parentNode != null) {
+				setRootNode(node.getLeftChild());
+			} else if (!onRight && parentNode != null){
+				setRootNode(node.getLeftChild());
+			}
+			node.setParent(null);
+			node = null;
 		} else {
-			
+			Node current = node.getRightChild();
+			while (current.getLeftChild() != null) {
+				current = current.getLeftChild();
+			}
+			// replace node to be deleted with current
+			Node newNode = new Node();
+			newNode.setDate(current.getDate());
+			if (onRight) {
+				setRootNode(newNode);
+				delete(current.getDate());
+				node.setParent(null);
+				node = null;
+			} else {
+				setRootNode(newNode);
+				delete(current.getDate());
+				node.setParent(null);
+				node = null;
+			}
 		}
-		// node deleting has one child : replace it with its child
-		
-		
-		//node deleting has two children: replace it with the leftest child of its right child, then make its left child the new left child of the new node
-		
+		size--;
 	}
+		
 
-	
 	// can use recursion?
 	@Override
 	public Node find(LocalDate valueToFind) {
@@ -141,7 +218,8 @@ public class BinaryTree implements IBinaryTree {
 				return current;
 			}
 		}
-		return null;
+		if (current.getDate().compareTo(valueToFind) == 0) return current;
+		else return null;
 	}
 	
 	public Node getRootNode() {
@@ -156,9 +234,24 @@ public class BinaryTree implements IBinaryTree {
 		return toString(rootNode);
 	}
 	
+	public int getMaxHeight(Node node) {
+		if (rootNode == null) return 0;
+		else {
+			int leftHeight = 0;
+			int rightHeight = 0;
+			if (node.getLeftChild() != null) {
+				leftHeight = getMaxHeight(node.getLeftChild());
+			}
+			if (node.getRightChild() != null) {
+				rightHeight = getMaxHeight(node.getRightChild());
+			}
+			return leftHeight > rightHeight ? leftHeight+1 : rightHeight+1;
+		}
+	}
+	
 	private String toString(Node nodeToString) {
 		if (nodeToString == null) {
-			return "";
+			return null;
 		} else {
 			return toString(rootNode.getLeftChild()) + ", " + rootNode.getDate() + ", "
 					+ toString(rootNode.getRightChild());
