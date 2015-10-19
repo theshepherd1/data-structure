@@ -11,6 +11,7 @@ import bp.Link;
 import bp.LinkedList;
 import bp.Node;
 import bp.Hash;
+import bp.Heap;
 
 
 //import bp.Data;
@@ -18,16 +19,28 @@ import bp.Hash;
 public class Main {
 
 	public static void main(String[] args) {
-        System.out.println(Hash.hash("a"));
-        System.out.println(Hash.hash("b"));
-        System.out.println(Hash.hash("aa"));
-        System.out.println(Hash.hash(""));
-        
-        System.out.println(Hash.hash("aaaaa"));
-        System.out.println(Hash.hash("s"));
-        System.out.println(Hash.hash("311"));
-        System.out.println(Hash.hash("3"));
-        System.out.println(Hash.hash("1"));
+
+		Heap h = new Heap();
+		
+		LocalDate[] dates = new LocalDate[10];
+		for (int i = 1; i < 11; i ++) {
+			dates[i-1] = LocalDate.of(2000 + -(2*i)^2, 2, 3);
+		}
+		
+		for (LocalDate date : dates) {
+			h.insert(date);
+		}
+		System.out.println("Date3" + dates[3].toString());
+
+		System.out.println(h.toString());
+		
+		h.delete();
+		
+		System.out.println("Deleted first" + h.toString());
+		
+		h.delete(dates[3]);
+		
+		System.out.println("Deleted Date3" + h.toString());
 
 
 	}
