@@ -30,14 +30,13 @@ public class Vertex implements IVertex {
 
 	@Override
 	public void addEdge(Edge pEdge) {
-		// TODO Auto-generated method stub
 
+		throw new UnsupportedOperationException("add edges through the graph interface");
 	}
 
 	@Override
 	public void removeEdge(int pIndex) {
-		// TODO Auto-generated method stub
-
+		throw new UnsupportedOperationException("remove edges through the graph interface");
 	}
 
 }

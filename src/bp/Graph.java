@@ -1,9 +1,13 @@
 package bp;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Graph implements IGraph {
 
+	List<Vertex> verticies = new ArrayList();
+	List<Edge> edges = new ArrayList();
+	
 	@Override
 	public Vertex getVertexByID(char pID) {
 		// TODO Auto-generated method stub
@@ -36,8 +40,9 @@ public class Graph implements IGraph {
 
 	@Override
 	public void addEdge(Edge pEdge) {
-		// TODO Auto-generated method stub
-
+		edges.add(pEdge);
+		addVertex(pEdge.getVertex1());
+		addVertex(pEdge.getVertex2());
 	}
 
 	@Override
@@ -48,8 +53,13 @@ public class Graph implements IGraph {
 
 	@Override
 	public void addVertex(Vertex pVertex) {
-		// TODO Auto-generated method stub
-
+		boolean found = false;
+		for (Vertex v: verticies) {
+			if (v.getID() == pVertext.getID()) {
+				found = true;
+			}
+		}
+		
 	}
 
 	@Override
