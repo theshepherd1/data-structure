@@ -2,6 +2,9 @@ package bp;
 
 public class Edge implements IEdge {
 
+	private Vertex v1;
+	private Vertex v2;
+	
 	@Override
 	public Vertex getVertex1() {
 		// TODO Auto-generated method stub

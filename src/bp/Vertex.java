@@ -4,16 +4,16 @@ import java.util.List;
 
 public class Vertex implements IVertex {
 
+	private char id;
+	
 	@Override
 	public char getID() {
-		// TODO Auto-generated method stub
-		return 0;
+		return id;
 	}
 
 	@Override
 	public void setID(char pID) {
-		// TODO Auto-generated method stub
-
+		id = pID;
 	}
 
 	@Override
@@ -30,7 +30,6 @@ public class Vertex implements IVertex {
 
 	@Override
 	public void addEdge(Edge pEdge) {
-
 		throw new UnsupportedOperationException("add edges through the graph interface");
 	}
 

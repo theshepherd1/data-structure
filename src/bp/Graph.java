@@ -5,37 +5,37 @@ import java.util.List;
 
 public class Graph implements IGraph {
 
-	List<Vertex> verticies = new ArrayList();
-	List<Edge> edges = new ArrayList();
+	private List<Vertex> verticies = new ArrayList<Vertex>();
+	private List<Edge> edges = new ArrayList<Edge>();
 	
 	@Override
 	public Vertex getVertexByID(char pID) {
-		// TODO Auto-generated method stub
+		for (Vertex v : verticies) {
+			if (v.getID() == pID) {
+				return v;
+			}
+		}
 		return null;
 	}
 
 	@Override
 	public List<Edge> getEdges() {
-		// TODO Auto-generated method stub
-		return null;
+		return edges;
 	}
 
 	@Override
 	public void setEdges(List<Edge> pEdges) {
-		// TODO Auto-generated method stub
-
+		edges = pEdges;
 	}
 
 	@Override
 	public List<Vertex> getVertices() {
-		// TODO Auto-generated method stub
-		return null;
+		return verticies;
 	}
 
 	@Override
 	public void setVertices(List<Vertex> pVertices) {
-		// TODO Auto-generated method stub
-
+		verticies = pVertices;
 	}
 
 	@Override
@@ -55,9 +55,12 @@ public class Graph implements IGraph {
 	public void addVertex(Vertex pVertex) {
 		boolean found = false;
 		for (Vertex v: verticies) {
-			if (v.getID() == pVertext.getID()) {
+			if (v.getID() == pVertex.getID()) {
 				found = true;
 			}
+		}
+		if (!found) {
+			
 		}
 		
 	}
