@@ -8,6 +8,8 @@ public class Graph implements IGraph {
 	private List<Vertex> vertices = new ArrayList<Vertex>();
 	private List<Edge> edges = new ArrayList<Edge>();
 	
+	private int visitedCounter = 0;
+		
 	@Override
 	public Vertex getVertexByID(char pID) {
 		for (Vertex v : vertices) {
@@ -61,7 +63,7 @@ public class Graph implements IGraph {
 
 	@Override
 	public void removeEdge(int pIndex) {
-		if (pIndex < edges.size() && edges.get(pIndex) != null) {
+		if (pIndex >= 0 && pIndex < edges.size() && edges.get(pIndex) != null) {
 			Edge myEdge = edges.get(pIndex);
 			myEdge.setVertex1(null);
 			myEdge.setVertex2(null);
@@ -91,7 +93,7 @@ public class Graph implements IGraph {
 
 	@Override
 	public void removeVertex(int pIndex) {
-		if (pIndex < vertices.size() && vertices.get(pIndex) != null) {
+		if (pIndex >= 0 && pIndex < vertices.size() && vertices.get(pIndex) != null) {
 			vertices.remove(pIndex);
 		}
 	}
@@ -103,7 +105,29 @@ public class Graph implements IGraph {
 				return false;
 			}
 		}
-		return true;
+		clearVisited();		
+		if (vertices.get(0) != null) {
+			visitedCounter = 0;
+			dfs(vertices.get(0).getID());
+		}
+		if (visitedCounter != vertices.size()) {
+			return false;
+		} else {
+			return true;
+		}
+	}
+	
+	private int dfs(char id) {
+		Vertex myVertex = getVertexByID(id);
+		myVertex.setVisited(true);
+		visitedCounter++;
+		char[] myVertexIds = getAdjacentVertices(myVertex.getID());
+		for (char c : myVertexIds) {
+			if (getAdjacentVertices(c) != null && !getVertexByID(c).isVisited()) {
+				dfs(c);
+			}
+		}
+		return 0;
 	}
 
 	@Override
@@ -150,6 +174,12 @@ public class Graph implements IGraph {
 			return "".toCharArray();
 		}
 		return "".toCharArray();
+	}	
+	
+	public void clearVisited() {
+		for (Vertex v : vertices) {
+			v.setVisited(false);
+		}
+		visitedCounter = 0;
 	}
-
 }

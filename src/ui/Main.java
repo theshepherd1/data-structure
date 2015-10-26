@@ -16,8 +16,10 @@ public static void main(String[] args) {
 	Vertex c = new Vertex('C');
 	Vertex d = new Vertex('D');
 	Vertex e = new Vertex('E');
+	Vertex f = new Vertex('F');
+
 	
-	myGraph.addVertex(a);
+	myGraph.addVertex(f);
 	myGraph.addVertex(a);
 	myGraph.addVertex(b);
 	myGraph.addVertex(c);
@@ -25,10 +27,10 @@ public static void main(String[] args) {
 	myGraph.addVertex(e);
 
 
-	myGraph.addEdge(new Edge(a,b));
+//	myGraph.addEdge(new Edge(a,b));
 	myGraph.addEdge(new Edge(b,c));
 	myGraph.addEdge(new Edge(e,b));
-//	myGraph.addEdge(new Edge(d,b));
+	myGraph.addEdge(new Edge(d,f));
 //	myGraph.addEdge(new Edge(a,b));
 
 	myGraph.addEdge(new Edge(d,e));
@@ -46,9 +48,9 @@ public static void main(String[] args) {
 	}
 	System.out.println();
 	
-	myGraph.removeEdge(4);
-	myGraph.removeEdge(2);
-	myGraph.removeVertex(2);
+//	myGraph.removeEdge(4);
+//	myGraph.removeEdge(2);
+//	myGraph.removeVertex(2);
 	
 	for (Vertex v : myGraph.getVertices()) {
 		System.out.print(v.getID());

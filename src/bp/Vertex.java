@@ -7,6 +7,7 @@ public class Vertex implements IVertex {
 
 	private char id;
 	private List<Edge> edges = new ArrayList<Edge>();
+	private boolean visited = false;
 	
 	public Vertex(char pID) {
 		id = pID;
@@ -49,9 +50,16 @@ public class Vertex implements IVertex {
 
 	@Override
 	public void removeEdge(int pIndex) {
-		if (pIndex < edges.size() && edges.get(pIndex) != null) {
+		if (pIndex >= 0 && pIndex < edges.size() && edges.get(pIndex) != null) {
 			edges.remove(pIndex);
 		}
 	}
 
+	public boolean isVisited() {
+		return visited;
+	}
+
+	public void setVisited(boolean visited) {
+		this.visited = visited;
+	}
 }
