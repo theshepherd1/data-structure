@@ -1,4 +1,6 @@
-package bp;
+package interfaces;
+
+import bp.Vertex;
 
 /**
  * Defines the properties and methods associated with an edge in a graph.
@@ -6,7 +8,7 @@ package bp;
  * @author cberkstresser
  * 
  */
-interface IEdge {
+public interface IEdge {
 
 	/**
 	 * 

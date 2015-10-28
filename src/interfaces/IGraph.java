@@ -1,11 +1,14 @@
-package bp;
+package interfaces;
 
 import java.util.List;
+
+import bp.Edge;
+import bp.Vertex;
 
 /**
  * The properties and methods associated with a graph.
  */
-interface IGraph {
+public interface IGraph {
 	Vertex getVertexByID(char pID);
 	
 	/**

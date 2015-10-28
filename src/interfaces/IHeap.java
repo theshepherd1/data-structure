@@ -1,11 +1,8 @@
-package bp;
+package interfaces;
 
 import java.time.LocalDate;
 
-public interface IBinaryTree {
-	LocalDate showMinimumValue();
-
-	LocalDate showMaximumValue();
+public interface IHeap {
 
 	boolean isEmpty();
 
@@ -16,8 +13,6 @@ public interface IBinaryTree {
 	void insert(LocalDate valueToInsert);
 
 	void delete(LocalDate valueToDelete);
-
-	Node find(LocalDate valueToFind);
 
 	String toString();
 }

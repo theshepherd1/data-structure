@@ -1,5 +1,7 @@
 package bp;
 
+import interfaces.IHeap;
+
 import java.time.LocalDate;
 
 public class Heap implements IHeap  {

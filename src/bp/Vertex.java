@@ -1,5 +1,7 @@
 package bp;
 
+import interfaces.IVertex;
+
 import java.util.ArrayList;
 import java.util.List;
 

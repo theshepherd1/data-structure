@@ -1,9 +1,12 @@
 package bp;
 
+import interfaces.IGraph;
+import interfaces.IGraph2;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class Graph implements IGraph {
+public class Graph implements IGraph, IGraph2 {
 
 	private List<Vertex> vertices = new ArrayList<Vertex>();
 	private List<Edge> edges = new ArrayList<Edge>();
@@ -176,10 +179,52 @@ public class Graph implements IGraph {
 		return "".toCharArray();
 	}	
 	
-	public void clearVisited() {
+	private void clearVisited() {
 		for (Vertex v : vertices) {
 			v.setVisited(false);
 		}
 		visitedCounter = 0;
+	}
+
+	@Override
+	public char[] DepthFirstSearch() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public char[] BreadthFirstSearch() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public char[] HamiltonianCycle(char pVertexID) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public char[] HamiltonianPath(char pVertex1ID, char pVertex2ID) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public char[] StrongEulerCycle(char pVertexID) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean hasStrongEulerCycle(char pVertexID) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean isComplete() {
+		// TODO Auto-generated method stub
+		return false;
 	}
 }

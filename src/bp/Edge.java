@@ -1,5 +1,7 @@
 package bp;
 
+import interfaces.IEdge;
+
 public class Edge implements IEdge {
 
 	private Vertex v1;

@@ -1,4 +1,6 @@
-package bp;
+package interfaces;
+
+import bp.Data;
 
 /**
  * Basic interface that all lists will implement.

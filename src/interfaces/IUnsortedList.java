@@ -1,4 +1,4 @@
-package bp;
+package interfaces;
 
 /**
  * This interface provides the functionality that we will implement for
@@ -9,7 +9,7 @@ package bp;
  * @author cberkstresser
  * @version 1.0
  */
-public interface ISortedList {
+public interface IUnsortedList {
 	/**
 	 * 
 	 * @return The current size of the list.
@@ -106,5 +106,14 @@ public interface ISortedList {
 	/**
 	 * Hmmm. This is interesting. I wonder what it is?
 	 */
+	default void bubbleSort() {
+		throw new UnsupportedOperationException("Bubble sort not implemented yet!");
+	}
 
+	/**
+	 * Hmmm. This is interesting. I wonder what it is?
+	 */
+	default void selectionSort() {
+		throw new UnsupportedOperationException("Selection sort not implemented yet!");
+	}
 }

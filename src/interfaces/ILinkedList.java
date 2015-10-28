@@ -1,6 +1,9 @@
-package bp;
+package interfaces;
 
-interface ILinkedList {
+import bp.Data;
+import bp.Link;
+
+public interface ILinkedList {
 
 	boolean isEmpty();
 
