@@ -1,5 +1,7 @@
 package bp;
 
+import java.util.Queue;
+import java.util.LinkedList;
 import interfaces.IGraph;
 import interfaces.IGraph2;
 
@@ -217,16 +219,33 @@ public class Graph implements IGraph, IGraph2 {
 	}
 	
 	private void dfs(char id) {
-		Vertex myVertex = getVertexByID(id);
-		myVertex.setVisited(true);
-		path[visitedCounter] = myVertex.getID();
+		Vertex source = getVertexByID(id);
+		source.setVisited(true);
+		path[visitedCounter] = source.getID();
 		visitedCounter++;
-		char[] myVertexIds = getAdjacentVertices(myVertex.getID());
+		char[] myVertexIds = getAdjacentVertices(source.getID());
 		for (char c : myVertexIds) {
 			if (getAdjacentVertices(c) != null && !getVertexByID(c).isVisited()) {
 				dfs(c);
 			}
 		}
+	}
+	
+	private void bfs(char id) {
+		Vertex source = getVertexByID(id);
+		Queue<Vertex> q = new LinkedList();
+		q.add(source);
+		while (!q.isEmpty()) {
+			Vertex visit = q.remove();
+			visit.setVisited(true);
+			char[] adjIds = this.getAdjacentVertices(visit.getID());
+			for (char adjId : adjIds) {
+				if (adjIds != null && !getVertexByID(adjId).isVisited()) {
+					q.add(getVertexByID(adjId));
+				}
+			}
+		}
+		
 	}
 	
 	private void clearVisited() {
