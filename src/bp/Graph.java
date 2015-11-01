@@ -8,11 +8,15 @@ import java.util.List;
 
 public class Graph implements IGraph, IGraph2 {
 
+	private static final int MAX = 100000;
+	
 	private List<Vertex> vertices = new ArrayList<Vertex>();
 	private List<Edge> edges = new ArrayList<Edge>();
 	
 	private int visitedCounter = 0;
-		
+	
+	char[] path = new char[MAX];
+	
 	@Override
 	public Vertex getVertexByID(char pID) {
 		for (Vertex v : vertices) {
@@ -120,19 +124,6 @@ public class Graph implements IGraph, IGraph2 {
 		}
 	}
 	
-	private int dfs(char id) {
-		Vertex myVertex = getVertexByID(id);
-		myVertex.setVisited(true);
-		visitedCounter++;
-		char[] myVertexIds = getAdjacentVertices(myVertex.getID());
-		for (char c : myVertexIds) {
-			if (getAdjacentVertices(c) != null && !getVertexByID(c).isVisited()) {
-				dfs(c);
-			}
-		}
-		return 0;
-	}
-
 	@Override
 	public boolean isAdjacent(char pVertex1ID, char pVertex2ID) {		
 		if (pVertex1ID != pVertex2ID && getVertexByID(pVertex1ID) != null && getVertexByID(pVertex2ID) != null) {
@@ -179,23 +170,20 @@ public class Graph implements IGraph, IGraph2 {
 		return "".toCharArray();
 	}	
 	
-	private void clearVisited() {
-		for (Vertex v : vertices) {
-			v.setVisited(false);
-		}
-		visitedCounter = 0;
-	}
-
 	@Override
 	public char[] DepthFirstSearch() {
-		// TODO Auto-generated method stub
-		return null;
+		clearVisited();
+		clearPath();
+		dfs(vertices.get(0).getID());
+		return path;
 	}
 
 	@Override
 	public char[] BreadthFirstSearch() {
-		// TODO Auto-generated method stub
-		return null;
+		clearVisited();
+		clearPath();
+		bfs(vertices.get(0).getID());
+		return path;
 	}
 
 	@Override
@@ -226,5 +214,29 @@ public class Graph implements IGraph, IGraph2 {
 	public boolean isComplete() {
 		// TODO Auto-generated method stub
 		return false;
+	}
+	
+	private void dfs(char id) {
+		Vertex myVertex = getVertexByID(id);
+		myVertex.setVisited(true);
+		path[visitedCounter] = myVertex.getID();
+		visitedCounter++;
+		char[] myVertexIds = getAdjacentVertices(myVertex.getID());
+		for (char c : myVertexIds) {
+			if (getAdjacentVertices(c) != null && !getVertexByID(c).isVisited()) {
+				dfs(c);
+			}
+		}
+	}
+	
+	private void clearVisited() {
+		for (Vertex v : vertices) {
+			v.setVisited(false);
+		}
+		visitedCounter = 0;
+	}
+
+	private void clearPath() {
+		path = new char[MAX];
 	}
 }
