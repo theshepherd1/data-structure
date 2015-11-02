@@ -11,6 +11,8 @@ public class Main {
 public static void main(String[] args) {
 
 	Graph myGraph = new Graph();
+	Graph myGraph2 = new Graph();
+	
 	Vertex a = new Vertex('A');
 	Vertex b = new Vertex('B');
 	Vertex c = new Vertex('C');
@@ -31,22 +33,42 @@ public static void main(String[] args) {
 	myGraph.addVertex(d);
 	myGraph.addVertex(e);
 	myGraph.addVertex(f);
-	myGraph.addVertex(g);
-	myGraph.addVertex(h);
-	myGraph.addVertex(i);
-	myGraph.addVertex(j);
-	myGraph.addVertex(k);
+//	myGraph.addVertex(g);
+//	myGraph.addVertex(h);
+//	myGraph.addVertex(i);
+//	myGraph.addVertex(j);
+//	myGraph.addVertex(k);
 
-	myGraph.addEdge(new Edge(a,b));
-	myGraph.addEdge(new Edge(a,c));
-	myGraph.addEdge(new Edge(b,d));
-	myGraph.addEdge(new Edge(b,e));
-	myGraph.addEdge(new Edge(e,h));
-	myGraph.addEdge(new Edge(c,g));
-	myGraph.addEdge(new Edge(c,f));
-	myGraph.addEdge(new Edge(f,i));
-	myGraph.addEdge(new Edge(i,j));
-	myGraph.addEdge(new Edge(i,k));
+//	myGraph.addEdge(new Edge(a,b));
+//	myGraph.addEdge(new Edge(a,f));
+//	myGraph.addEdge(new Edge(a,d));
+//	myGraph.addEdge(new Edge(b,d));
+//	myGraph.addEdge(new Edge(b,e));
+//	myGraph.addEdge(new Edge(b,c));
+//	myGraph.addEdge(new Edge(c,d));
+//	myGraph.addEdge(new Edge(d,e));
+//	myGraph.addEdge(new Edge(d,e));
+//	myGraph.addEdge(new Edge(e,f));
+//	myGraph.addEdge(new Edge(f,g));
+//	myGraph.addEdge(new Edge(f,h));
+//	myGraph.addEdge(new Edge(h,g));
+//	myGraph.addEdge(new Edge(c,g));
+	
+	myGraph2.addVertex(a);
+	myGraph2.addVertex(b);
+	myGraph2.addVertex(c);
+	myGraph2.addVertex(d);
+	myGraph2.addVertex(e);
+	myGraph2.addVertex(f);
+
+	myGraph2.addEdge(new Edge(a,b));
+	myGraph2.addEdge(new Edge(a,d));
+	myGraph2.addEdge(new Edge(b,c));
+	myGraph2.addEdge(new Edge(c,f));
+	myGraph2.addEdge(new Edge(f,e));
+	myGraph2.addEdge(new Edge(e,d));
+	
+
 
 
 
@@ -55,17 +77,7 @@ public static void main(String[] args) {
 //	myGraph.removeEdge(2);
 //	myGraph.removeVertex(2);
 	System.out.println(String.valueOf(myGraph.isConnected()));
-	char[] a1 = myGraph.DepthFirstSearch();
-	for (int I = 0 ; I < myGraph.getVertices().size(); I++) {
-		System.out.print((a1[I]));
-	}
-	System.out.println();
-
-	a1 = myGraph.BreadthFirstSearch();
-	for (int I = 0 ; I < myGraph.getVertices().size(); I++) {
-		System.out.print((a1[I]));
-	}
-	
+	System.out.println(String.valueOf(myGraph2.hasStrongEulerCycle('A')));
 }
 
 }

@@ -17,7 +17,7 @@ public class Graph implements IGraph, IGraph2 {
 	
 	private int visitedCounter = 0;
 	
-	char[] path = new char[MAX];
+	private List<Character> path = new ArrayList<Character>();
 	
 	@Override
 	public Vertex getVertexByID(char pID) {
@@ -177,7 +177,7 @@ public class Graph implements IGraph, IGraph2 {
 		clearVisited();
 		clearPath();
 		dfs(vertices.get(0).getID());
-		return path;
+		return pathToCharArray();
 	}
 
 	@Override
@@ -185,31 +185,63 @@ public class Graph implements IGraph, IGraph2 {
 		clearVisited();
 		clearPath();
 		bfs(vertices.get(0).getID());
-		return path;
+		return pathToCharArray();
 	}
 
 	@Override
 	public char[] HamiltonianCycle(char pVertexID) {
-		// TODO Auto-generated method stub
-		return null;
+		if (!isConnected()) {
+			return new char[0];
+		}
+		if (vertices.size() < 3) {
+			return new char[0];
+		}
+		clearPath();
+		path.add(pVertexID);
+		if (hc(1) == true) {
+			path.add(pVertexID);
+			return pathToCharArray();
+		}
+		return new char[0];
 	}
 
 	@Override
 	public char[] HamiltonianPath(char pVertex1ID, char pVertex2ID) {
-		// TODO Auto-generated method stub
-		return null;
+		if (!isConnected()) {
+			return new char[0];
+		}		
+		if (vertices.size() < 3) {
+			return new char[0];
+		}
+		clearPath();
+		path.add(pVertex1ID);
+		if (hp(1, pVertex1ID, pVertex2ID) == true) {
+			return pathToCharArray();
+		}
+		return new char[0];
 	}
 
 	@Override
 	public char[] StrongEulerCycle(char pVertexID) {
-		// TODO Auto-generated method stub
+		if (!hasStrongEulerCycle(pVertexID)) {
+			return new char[0];
+		} else {
+			
+		}
 		return null;
 	}
 
 	@Override
 	public boolean hasStrongEulerCycle(char pVertexID) {
-		// TODO Auto-generated method stub
-		return false;
+		if (!isConnected()) {
+			return false;
+		}
+		for (Vertex v : vertices) {
+			if (v.getEdges().size() % 2 != 0) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 	@Override
@@ -221,7 +253,7 @@ public class Graph implements IGraph, IGraph2 {
 	private void dfs(char id) {
 		Vertex source = getVertexByID(id);
 		source.setVisited(true);
-		path[visitedCounter] = source.getID();
+		path.add(source.getID());
 		visitedCounter++;
 		char[] myVertexIds = getAdjacentVertices(source.getID());
 		for (char c : myVertexIds) {
@@ -233,11 +265,13 @@ public class Graph implements IGraph, IGraph2 {
 	
 	private void bfs(char id) {
 		Vertex source = getVertexByID(id);
-		Queue<Vertex> q = new LinkedList();
+		Queue<Vertex> q = new LinkedList<Vertex>();
 		q.add(source);
 		while (!q.isEmpty()) {
 			Vertex visit = q.remove();
 			visit.setVisited(true);
+			path.add(visit.getID());
+			visitedCounter++;
 			char[] adjIds = this.getAdjacentVertices(visit.getID());
 			for (char adjId : adjIds) {
 				if (adjIds != null && !getVertexByID(adjId).isVisited()) {
@@ -248,6 +282,66 @@ public class Graph implements IGraph, IGraph2 {
 		
 	}
 	
+	private boolean isSafe(int index, int pos) {
+		if (!isAdjacent(vertices.get(index).getID(), path.get(pos-1))) {
+			return false;
+		}
+		for (char c : path) {
+			if (vertices.get(index).getID() == c) {
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	private boolean hc(int pos) {
+		if (path.size() == vertices.size()) {
+			char first  = path.get(0);
+			char last = path.get(path.size()-1);
+			if (isAdjacent(first,last)) {
+				return true;
+			} else {
+				return false;
+			}
+		}
+		
+		for (int i = 0; i < vertices.size(); i++) {
+			if (isSafe(i, pos)) {
+				path.add(vertices.get(i).getID());
+				if (hc(pos+1)) {
+					return true;
+				} else {
+					path.remove(path.size()-1);
+				}
+			}
+		}
+		return false;
+	}
+	
+	private boolean hp(int pos, char start, char end) {
+		if (path.size() == vertices.size()) {
+			char first = path.get(0);
+			char last = path.get(path.size()-1);
+			if (first == start && last == end) {
+				return true;
+			} else {
+				return false;
+			}
+		}
+		
+		for (int i = 0; i < vertices.size(); i++) {
+			if (isSafe(i, pos)) {
+				path.add(vertices.get(i).getID());
+				if (hp(pos+1, start, end)) {
+					return true;
+				} else {
+					path.remove(path.size()-1);
+				}
+			}
+		}
+		return false;
+	}
+		
 	private void clearVisited() {
 		for (Vertex v : vertices) {
 			v.setVisited(false);
@@ -256,6 +350,14 @@ public class Graph implements IGraph, IGraph2 {
 	}
 
 	private void clearPath() {
-		path = new char[MAX];
+		path.clear();
+	}
+	
+	private char[] pathToCharArray() {
+		char[] result = new char[path.size()];
+		for (int i = 0; i < path.size(); i++) {
+			result[i] = path.get(i);
+		}
+		return result;
 	}
 }

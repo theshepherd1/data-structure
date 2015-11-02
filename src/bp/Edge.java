@@ -6,6 +6,7 @@ public class Edge implements IEdge {
 
 	private Vertex v1;
 	private Vertex v2;
+	private String id;
 	
 	public Edge(Vertex pV1, Vertex pV2) {
 		v1 = pV1;
@@ -33,5 +34,4 @@ public class Edge implements IEdge {
 	public void setVertex2(Vertex vertex2) {
 		v2 = vertex2;
 	}
-
 }
