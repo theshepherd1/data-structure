@@ -58,26 +58,32 @@ public static void main(String[] args) {
 	myGraph2.addVertex(b);
 	myGraph2.addVertex(c);
 	myGraph2.addVertex(d);
-	myGraph2.addVertex(e);
-	myGraph2.addVertex(f);
+//	myGraph2.addVertex(e);
+//	myGraph2.addVertex(f);
 
 	myGraph2.addEdge(new Edge(a,b));
 	myGraph2.addEdge(new Edge(a,d));
+	myGraph2.addEdge(new Edge(a,c));
 	myGraph2.addEdge(new Edge(b,c));
-	myGraph2.addEdge(new Edge(c,f));
-	myGraph2.addEdge(new Edge(f,e));
-	myGraph2.addEdge(new Edge(e,d));
+	myGraph2.addEdge(new Edge(b,d));
+	myGraph2.addEdge(new Edge(c,d));
+
+//	myGraph2.addEdge(new Edge(c,f));
+//	myGraph2.addEdge(new Edge(f,e));
+//	myGraph2.addEdge(new Edge(e,d));
 	
 
 
 
 
 	
-//	myGraph.removeEdge(4);
+//	myGraph.reioemoveEdge(4);
 //	myGraph.removeEdge(2);
 //	myGraph.removeVertex(2);
 	System.out.println(String.valueOf(myGraph.isConnected()));
 	System.out.println(String.valueOf(myGraph2.hasStrongEulerCycle('A')));
+	System.out.println(String.valueOf(myGraph.isComplete()));
+	System.out.println(String.valueOf(myGraph2.isComplete()));
 }
 
 }

@@ -6,13 +6,14 @@ public class Edge implements IEdge {
 
 	private Vertex v1;
 	private Vertex v2;
-	private String id;
+	private boolean visited;
 	
 	public Edge(Vertex pV1, Vertex pV2) {
 		v1 = pV1;
 		v2 = pV2;
 		v1.addEdge(this);
 		v2.addEdge(this);
+		setVisited(false);
 	}
 	
 	@Override
@@ -33,5 +34,13 @@ public class Edge implements IEdge {
 	@Override
 	public void setVertex2(Vertex vertex2) {
 		v2 = vertex2;
+	}
+
+	public boolean isVisited() {
+		return visited;
+	}
+
+	public void setVisited(boolean visited) {
+		this.visited = visited;
 	}
 }

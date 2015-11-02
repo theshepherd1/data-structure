@@ -226,7 +226,8 @@ public class Graph implements IGraph, IGraph2 {
 		if (!hasStrongEulerCycle(pVertexID)) {
 			return new char[0];
 		} else {
-			
+			clearVisited();
+			clearPath();
 		}
 		return null;
 	}
@@ -246,8 +247,12 @@ public class Graph implements IGraph, IGraph2 {
 
 	@Override
 	public boolean isComplete() {
-		// TODO Auto-generated method stub
-		return false;
+		int n = vertices.size();
+		if (edges.size() == n*(n-1)/2 && isConnected()) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 	
 	private void dfs(char id) {
@@ -340,6 +345,10 @@ public class Graph implements IGraph, IGraph2 {
 			}
 		}
 		return false;
+	}
+	
+	private boolean ec() {
+		
 	}
 		
 	private void clearVisited() {
