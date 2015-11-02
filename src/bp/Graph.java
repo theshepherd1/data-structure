@@ -228,6 +228,11 @@ public class Graph implements IGraph, IGraph2 {
 		} else {
 			clearVisited();
 			clearPath();
+			try {
+				Graph g = (Graph) this.clone();
+			} catch (CloneNotSupportedException e) {
+				System.out.println(e);
+			}
 		}
 		return null;
 	}
@@ -347,10 +352,40 @@ public class Graph implements IGraph, IGraph2 {
 		return false;
 	}
 	
-	private boolean ec() {
-		
+	private void ec(char u, Graph g) {
+		for (char c : getAdjacentVertices(u)) {
+			Vertex v = getVertexByID(c);
+			if (v != null && isValidEdge(u, v.getID(), g)) {
+				path.add(u);
+				path.add(v.getID());
+				ec(v.getID(), g);
+			}
+		}
 	}
 		
+	private Edge getSharedEdge(char u, char v) {
+		for (Edge e1 : getVertexByID(u).getEdges()) {
+			for (Edge e2: getVertexByID(v).getEdges()) {
+				if (e2.equals(e1)) {
+					return e2;
+				}
+			}
+		}
+		return null;
+	}
+	
+	private boolean isValidEdge(char u, char v, Graph g) {
+		if (getAdjacentVertices(u).length == 1 && getAdjacentVertices(u)[0] == v) {
+			return true;
+		}
+		Edge e = getSharedEdge(u, v);
+		g.removeEdge(edges.indexOf(e));
+		if (g.isConnected()) {
+			return true;
+		}
+		return false;
+	}
+	
 	private void clearVisited() {
 		for (Vertex v : vertices) {
 			v.setVisited(false);
