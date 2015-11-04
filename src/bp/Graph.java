@@ -234,7 +234,7 @@ public class Graph implements IGraph, IGraph2 {
 				System.out.println(e);
 			}
 		}
-		return null;
+		return pathToCharArray();
 	}
 
 	@Override
