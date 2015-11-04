@@ -282,10 +282,11 @@ public class Graph implements IGraph, IGraph2 {
 			visit.setVisited(true);
 			path.add(visit.getID());
 			visitedCounter++;
-			char[] adjIds = this.getAdjacentVertices(visit.getID());
+			char[] adjIds = getAdjacentVertices(visit.getID());
 			for (char adjId : adjIds) {
-				if (adjIds != null && !getVertexByID(adjId).isVisited()) {
+				if (adjIds != null && getVertexByID(adjId).isVisited() == false) {
 					q.add(getVertexByID(adjId));
+					getVertexByID(adjId).setVisited(true);
 				}
 			}
 		}	
