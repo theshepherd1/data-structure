@@ -288,8 +288,7 @@ public class Graph implements IGraph, IGraph2 {
 					q.add(getVertexByID(adjId));
 				}
 			}
-		}
-		
+		}	
 	}
 	
 	private boolean isSafe(int index, int pos) {
