@@ -37,17 +37,17 @@ public class Vertex implements IVertex {
 
 	@Override
 	public void addEdge(Edge pEdge) {
-		boolean found = false;
-		for (Edge e : edges) {
-			if ((e.getVertex1().getID() == pEdge.getVertex1().getID() && e.getVertex2().getID() == pEdge.getVertex2().getID()) || 
-					(e.getVertex1().getID() == pEdge.getVertex1().getID() && e.getVertex2().getID() == pEdge.getVertex2().getID())) {
-				found = true;
-				break;
-			}
-		}
-		if (!found) {
+//		boolean found = false;
+//		for (Edge e : edges) {
+//			if ((e.getVertex1().getID() == pEdge.getVertex1().getID() && e.getVertex2().getID() == pEdge.getVertex2().getID()) || 
+//					(e.getVertex1().getID() == pEdge.getVertex1().getID() && e.getVertex2().getID() == pEdge.getVertex2().getID())) {
+//				found = true;
+//				break;
+//			}
+//		}
+//		if (!found) {
 			edges.add(pEdge);
-		}
+//		}
 	}
 
 	@Override

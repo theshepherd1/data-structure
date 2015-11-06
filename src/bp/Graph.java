@@ -51,23 +51,25 @@ public class Graph implements IGraph, IGraph2 {
 
 	@Override
 	public void addEdge(Edge pEdge) {
-		boolean found = false;
-		for (Edge e : edges) {
-			if ((e.getVertex1().getID() == pEdge.getVertex1().getID() && e.getVertex2().getID() == pEdge.getVertex2().getID()) || 
-					(e.getVertex1().getID() == pEdge.getVertex1().getID() && e.getVertex2().getID() == pEdge.getVertex2().getID())) {
-				found = true;
-				break;
-			}
-		}
-		if (!found) {
+//		boolean found = false;
+//		for (Edge e : edges) {
+//			if ((e.getVertex1().getID() == pEdge.getVertex1().getID() && e.getVertex2().getID() == pEdge.getVertex2().getID()) || 
+//					(e.getVertex1().getID() == pEdge.getVertex1().getID() && e.getVertex2().getID() == pEdge.getVertex2().getID())) {
+//				found = true;
+//				break;
+//			}
+//		}
+//		if (!found) {
 			edges.add(pEdge);
 			if (pEdge.getVertex1() != null) {
+				pEdge.getVertex1().addEdge(pEdge);
 				addVertex(pEdge.getVertex1());
 			}
 			if (pEdge.getVertex2() != null) {
+				pEdge.getVertex2().addEdge(pEdge);
 				addVertex(pEdge.getVertex2());
 			}
-		}
+//		}
 	}
 
 	@Override
@@ -243,7 +245,7 @@ public class Graph implements IGraph, IGraph2 {
 			return false;
 		}
 		for (Vertex v : vertices) {
-			if (v.getEdges().size() % 2 != 0) {
+			if ((v.getEdges().size()%2) != 0) {
 				return false;
 			}
 		}
