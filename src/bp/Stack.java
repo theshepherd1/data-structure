@@ -1,5 +1,7 @@
 package bp;
 
+import interfaces.IStack;
+
 public class Stack extends UnsortedList implements IStack {
 	public static final int MAX_SIZE = 5;
 	private Data[] dataItems = new Data[MAX_SIZE];

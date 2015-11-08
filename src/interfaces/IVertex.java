@@ -1,6 +1,8 @@
-package bp;
+package interfaces;
 
 import java.util.List;
+
+import bp.Edge;
 
 /**
  * Defines the properties and methods of a vertex in a graph.
@@ -8,7 +10,7 @@ import java.util.List;
  * @author cberkstresser
  * 
  */
-interface IVertex {
+public interface IVertex {
 	/**
 	 * 
 	 * @return Returns the ID of the vertex.

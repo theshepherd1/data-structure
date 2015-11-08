@@ -1,5 +1,7 @@
 package bp;
 
+import interfaces.ILinkedList;
+
 public class LinkedList implements ILinkedList {
 	private Link first;
 	private Link last;

@@ -1,5 +1,7 @@
 package bp;
 
+import interfaces.IQueue;
+
 public class Queue extends UnsortedList implements IQueue {
 	public static final int MAX_SIZE = 1000;
 	private Data[] dataItems = new Data[MAX_SIZE];
