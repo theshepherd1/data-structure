@@ -410,7 +410,7 @@ public class Graph implements IGraph, IGraph2 {
 	}
 	
 	private void clearVisited() {
-		for (Vertex v : vertices) {
+		for (Vertex v : vertices) { 
 			v.setVisited(false);
 		}
 		for (Edge e : edges) {
@@ -429,5 +429,13 @@ public class Graph implements IGraph, IGraph2 {
 			result[i] = path.get(i);
 		}
 		return result;
+	}
+
+	///!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!WEIGHTED GRAPHTS!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	
+	@Override
+	public char[] getShortestPath(char pVertex1ID, char pVertex2ID) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

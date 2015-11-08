@@ -102,10 +102,7 @@ public interface IGraph {
 	 * @return A character array of the ids of the vertices in the shortest
 	 *         path.
 	 */
-	default char[] getShortestPath(char pVertex1ID, char pVertex2ID) {
-		throw new UnsupportedOperationException("Not implemented yet");
-	};
-
+	char[] getShortestPath(char pVertex1ID, char pVertex2ID);
 	/**
 	 * Show a list of the ids of all adjacent vertices.
 	 * 

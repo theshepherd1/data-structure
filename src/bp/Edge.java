@@ -6,6 +6,7 @@ public class Edge implements IEdge {
 
 	private Vertex v1;
 	private Vertex v2;
+	private int weight;
 	private boolean visited;
 	
 	public Edge(Vertex pV1, Vertex pV2) {
@@ -42,5 +43,13 @@ public class Edge implements IEdge {
 
 	public void setVisited(boolean visited) {
 		this.visited = visited;
+	}
+
+	public int getWeight() {
+		return weight;
+	}
+
+	public void setWeight(int weight) {
+		this.weight = weight;
 	}
 }
