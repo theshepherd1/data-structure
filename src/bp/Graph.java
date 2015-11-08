@@ -1,12 +1,13 @@
 package bp;
 
-import java.util.Queue;
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
+import java.util.Queue;
+import java.util.Stack;
+
 import interfaces.IGraph;
 import interfaces.IGraph2;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class Graph implements IGraph, IGraph2 {
 
@@ -61,14 +62,6 @@ public class Graph implements IGraph, IGraph2 {
 //		}
 //		if (!found) {
 			edges.add(pEdge);
-			if (pEdge.getVertex1() != null) {
-				pEdge.getVertex1().addEdge(pEdge);
-				addVertex(pEdge.getVertex1());
-			}
-			if (pEdge.getVertex2() != null) {
-				pEdge.getVertex2().addEdge(pEdge);
-				addVertex(pEdge.getVertex2());
-			}
 //		}
 	}
 
@@ -157,9 +150,9 @@ public class Graph implements IGraph, IGraph2 {
 				List<Character> temp = new ArrayList<Character>();
 				List<Edge> myEdges = myVertex.getEdges();
 				for (Edge e : myEdges) {
-					if (e.getVertex1() != null && !e.getVertex1().equals(myVertex)) {
+					if (e.getVertex1() != null && !e.getVertex1().equals(myVertex) && !temp.contains(e.getVertex1().getID())) {
 						temp.add(Character.valueOf(e.getVertex1().getID()));
-					} else if (e.getVertex2() != null && !e.getVertex2().equals(myVertex)) {
+					} else if (e.getVertex2() != null && !e.getVertex2().equals(myVertex) && !temp.contains(e.getVertex2().getID())) {
 						temp.add(Character.valueOf(e.getVertex2().getID()));
 					}
 				}
@@ -230,11 +223,7 @@ public class Graph implements IGraph, IGraph2 {
 		} else {
 			clearVisited();
 			clearPath();
-			try {
-				Graph g = (Graph) this.clone();
-			} catch (CloneNotSupportedException e) {
-				System.out.println(e);
-			}
+			dfs2(pVertexID);
 		}
 		return pathToCharArray();
 	}
@@ -273,6 +262,38 @@ public class Graph implements IGraph, IGraph2 {
 				dfs(c);
 			}
 		}
+	}
+	
+	private void dfs2(char id) {
+		Vertex source = getVertexByID(id);
+		Stack<Vertex> s = new Stack<Vertex>();
+		s.push(source);
+		while (!s.isEmpty()) {
+			Vertex visit = s.peek();
+			if (hasUnvisited(visit.getID())) {
+				for (Edge e : visit.getEdges()) {
+					if (!e.isVisited()) {
+						Vertex v = visit.getID() == e.getVertex1().getID() ? e.getVertex2() : e.getVertex1();
+						s.push(v);
+						e.setVisited(true);
+						break;
+					}
+				}
+			} else {
+				s.pop();
+				path.add(visit.getID());
+			}
+		}
+	}
+	
+	private boolean hasUnvisited(char id) {
+		Vertex v = getVertexByID(id);
+		for (Edge e : v.getEdges()) {
+			if (!e.isVisited()) {
+				return true;
+			}
+		}
+		return false;
 	}
 	
 	private void bfs(char id) {
@@ -391,6 +412,9 @@ public class Graph implements IGraph, IGraph2 {
 	private void clearVisited() {
 		for (Vertex v : vertices) {
 			v.setVisited(false);
+		}
+		for (Edge e : edges) {
+			e.setVisited(false);
 		}
 		visitedCounter = 0;
 	}
