@@ -5,7 +5,9 @@ import bp.Direction;
 
 public class Edge implements IEdge {
 
+	// source
 	private Vertex v1;
+	// destination
 	private Vertex v2;
 	private double weight;
 	private boolean visited;

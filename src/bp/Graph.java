@@ -288,6 +288,28 @@ public class Graph implements IGraph, IGraph2 {
 		}
 	}
 	
+	public boolean canTraverse(Vertex source, Vertex destination, Edge e) {
+		if (e.getDirection() == Direction.BOTH) {
+			return true;
+		}
+		if (e.getDirection() == Direction.NEITHER) {
+			return false;
+		}
+		if (e.getVertex1().getID() == source.getID() && e.getVertex2().getID() == destination.getID()) {
+			// source is Vertex1 and destination Vertex2
+			if (e.getDirection() == Direction.FORWARD) {
+				return true;
+			}
+		} 
+		if (e.getVertex2().getID() == source.getID() && e.getVertex1().getID() == destination.getID()) {
+			// source is Vertex2 and destination Vertex1
+			if (e.getDirection() == Direction.BACKWARD) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	private boolean hasUnvisited(char id) {
 		Vertex v = getVertexByID(id);
 		for (Edge e : v.getEdges()) {
@@ -388,7 +410,7 @@ public class Graph implements IGraph, IGraph2 {
 //		}
 //	}
 		
-	private Edge getSharedEdge(char u, char v) {
+	public Edge getSharedEdge(char u, char v) {
 		for (Edge e1 : getVertexByID(u).getEdges()) {
 			for (Edge e2: getVertexByID(v).getEdges()) {
 				if (e2.equals(e1)) {

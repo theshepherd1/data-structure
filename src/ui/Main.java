@@ -1,5 +1,6 @@
 package ui;
 
+import bp.Direction;
 import bp.Edge;
 import bp.Vertex;
 import bp.Graph;
@@ -7,42 +8,43 @@ import bp.Graph;
 public class Main {
 public static void main(String[] args) {
 
-// Declare Vertices
+	
+	
+	
+//// Declare Vertices
 Vertex vertexA = new Vertex('A');
 Vertex vertexB = new Vertex('B');
-Vertex vertexC = new Vertex('C');
-Vertex vertexD = new Vertex('D');
-Vertex vertexE = new Vertex('E');
-
-
-// Graph 1
+//Vertex vertexC = new Vertex('C');
+//Vertex vertexD = new Vertex('D');
+//Vertex vertexE = new Vertex('E');
+//
+//
+//// Graph 1
 Graph graph1 = new Graph();
-System.out.println("First Graph...");
-
-// Add Needed Vertices to the graph
+//System.out.println("First Graph...");
+//
+//// Add Needed Vertices to the graph
 graph1.addVertex(vertexA);
 graph1.addVertex(vertexB);
-graph1.addVertex(vertexC);
-graph1.addVertex(vertexD);
-graph1.addVertex(vertexE);
-
-
-// Add new edges between the used vertices
-graph1.addEdge(new Edge(vertexA, vertexB, 2));
-graph1.addEdge(new Edge(vertexA, vertexC, 1));
-graph1.addEdge(new Edge(vertexB, vertexD, 3));
-graph1.addEdge(new Edge(vertexC, vertexD, 3));
-graph1.addEdge(new Edge(vertexB, vertexE, 3));
-graph1.addEdge(new Edge(vertexD, vertexE, 3));
-
-
-
-
-//// Test 1
-System.out.println("Is this graph connected? " + graph1.isConnected()); // True
-for (char v : graph1.getShortestPath('E', 'C'))
-System.out.print(v);
-
+//graph1.addVertex(vertexC);
+//graph1.addVertex(vertexD);
+//graph1.addVertex(vertexE);
+//
+//
+//// Add new edges between the used vertices
+//graph1.addEdge(new Edge(vertexA, vertexC, 1));
+//graph1.addEdge(new Edge(vertexB, vertexD, 3));
+//graph1.addEdge(new Edge(vertexC, vertexD, 3));
+//graph1.addEdge(new Edge(vertexB, vertexE, 3));
+//graph1.addEdge(new Edge(vertexD, vertexE, 3));
+//
+//
+//
+////// Test 1
+//System.out.println("Is this graph connected? " + graph1.isConnected()); // True
+//for (char v : graph1.getShortestPath('E', 'C'))
+//System.out.print(v);
+//
 
 //System.out.println("Are B and C adjacent? "
 //+ graph1.isAdjacent('B', 'C')); // True
