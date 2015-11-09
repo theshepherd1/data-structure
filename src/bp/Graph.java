@@ -288,7 +288,7 @@ public class Graph implements IGraph, IGraph2 {
 		}
 	}
 	
-	public boolean canTraverse(Vertex source, Vertex destination, Edge e) {
+	private boolean canTraverse(Vertex source, Vertex destination, Edge e) {
 		if (e.getDirection() == Direction.BOTH) {
 			return true;
 		}
@@ -410,7 +410,7 @@ public class Graph implements IGraph, IGraph2 {
 //		}
 //	}
 		
-	public Edge getSharedEdge(char u, char v) {
+	private Edge getSharedEdge(char u, char v) {
 		for (Edge e1 : getVertexByID(u).getEdges()) {
 			for (Edge e2: getVertexByID(v).getEdges()) {
 				if (e2.equals(e1)) {
