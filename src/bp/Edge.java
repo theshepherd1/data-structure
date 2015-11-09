@@ -6,7 +6,7 @@ public class Edge implements IEdge {
 
 	private Vertex v1;
 	private Vertex v2;
-	private int weight;
+	private double weight;
 	private boolean visited;
 	
 	public Edge(Vertex pV1, Vertex pV2) {
@@ -15,6 +15,15 @@ public class Edge implements IEdge {
 		v1.addEdge(this);
 		v2.addEdge(this);
 		setVisited(false);
+	}
+	
+	public Edge(Vertex pV1, Vertex pV2, double pWeight) {
+		v1 = pV1;
+		v2 = pV2;
+		v1.addEdge(this);
+		v2.addEdge(this);
+		setVisited(false);
+		setWeight(pWeight);
 	}
 	
 	@Override
@@ -45,11 +54,11 @@ public class Edge implements IEdge {
 		this.visited = visited;
 	}
 
-	public int getWeight() {
+	public double getWeight() {
 		return weight;
 	}
 
-	public void setWeight(int weight) {
+	public void setWeight(double weight) {
 		this.weight = weight;
 	}
 }

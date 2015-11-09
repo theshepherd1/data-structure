@@ -1,8 +1,10 @@
 package bp;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.PriorityQueue;
 import java.util.Queue;
 import java.util.Stack;
 
@@ -375,16 +377,16 @@ public class Graph implements IGraph, IGraph2 {
 		return false;
 	}
 	
-	private void ec(char u, Graph g) {
-		for (char c : getAdjacentVertices(u)) {
-			Vertex v = getVertexByID(c);
-			if (v != null && isValidEdge(u, v.getID(), g)) {
-				path.add(u);
-				path.add(v.getID());
-				ec(v.getID(), g);
-			}
-		}
-	}
+//	private void ec(char u, Graph g) {
+//		for (char c : getAdjacentVertices(u)) {
+//			Vertex v = getVertexByID(c);
+//			if (v != null && isValidEdge(u, v.getID(), g)) {
+//				path.add(u);
+//				path.add(v.getID());
+//				ec(v.getID(), g);
+//			}
+//		}
+//	}
 		
 	private Edge getSharedEdge(char u, char v) {
 		for (Edge e1 : getVertexByID(u).getEdges()) {
@@ -397,17 +399,17 @@ public class Graph implements IGraph, IGraph2 {
 		return null;
 	}
 	
-	private boolean isValidEdge(char u, char v, Graph g) {
-		if (getAdjacentVertices(u).length == 1 && getAdjacentVertices(u)[0] == v) {
-			return true;
-		}
-		Edge e = getSharedEdge(u, v);
-		g.removeEdge(edges.indexOf(e));
-		if (g.isConnected()) {
-			return true;
-		}
-		return false;
-	}
+//	private boolean isValidEdge(char u, char v, Graph g) {
+//		if (getAdjacentVertices(u).length == 1 && getAdjacentVertices(u)[0] == v) {
+//			return true;
+//		}
+//		Edge e = getSharedEdge(u, v);
+//		g.removeEdge(edges.indexOf(e));
+//		if (g.isConnected()) {
+//			return true;
+//		}
+//		return false;
+//	}
 	
 	private void clearVisited() {
 		for (Vertex v : vertices) { 
@@ -435,7 +437,59 @@ public class Graph implements IGraph, IGraph2 {
 	
 	@Override
 	public char[] getShortestPath(char pVertex1ID, char pVertex2ID) {
-		// TODO Auto-generated method stub
-		return null;
+		clearVisited();
+		clearPath();
+		
+		List<Vertex> q = new ArrayList<Vertex>();
+		List<Vertex> unvisitted = new ArrayList<Vertex>();
+		unvisitted.addAll(vertices);
+
+		Vertex start = getVertexByID(pVertex1ID);
+		start.setDistance(0);
+		q.add(start);
+		
+		while (!unvisitted.isEmpty()) {
+			Vertex current = q.remove(0);
+			for (char c : getAdjacentVertices(current.getID())) {
+				Vertex v = getVertexByID(c);
+				if (!v.isVisited()) {
+					q.add(v);
+					v.setVisited(true);
+					unvisitted.remove(v);
+					
+					double tempD = (current.getDistance() + getSharedEdge(current.getID(), v.getID()).getWeight());
+					double d = tempD < v.getDistance() ? tempD : v.getDistance();
+					v.setDistance(d);
+				}
+			}
+		}
+		
+		clearVisited();
+		
+		Vertex end = getVertexByID(pVertex2ID);
+		Vertex temp = end;
+		path.add(pVertex2ID);
+		while (temp.getID() != start.getID()) {
+			Vertex shortest = getVertexByID(getAdjacentVertices(temp.getID())[0]);
+			for (char c : getAdjacentVertices(temp.getID())) {
+				Vertex v = getVertexByID(c);
+				if (!v.isVisited()) {
+					v.setVisited(true);
+					shortest = v.getDistance() < shortest.getDistance() ? v : shortest;
+				}
+			}
+			path.add(shortest.getID());
+			temp = shortest;
+		}
+		return reverse(pathToCharArray());
+	}
+	
+	private char[] reverse(char[] in) {
+		char[] out = new char[in.length];
+		for (int i = 0; i < in.length; i++) {
+			out[i] = in[in.length-1-i];
+		}
+		
+		return out;
 	}
 }

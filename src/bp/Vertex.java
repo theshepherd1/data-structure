@@ -10,9 +10,11 @@ public class Vertex implements IVertex {
 	private char id;
 	private List<Edge> edges = new ArrayList<Edge>();
 	private boolean visited = false;
+	private double distance;
 	
 	public Vertex(char pID) {
 		id = pID;
+		distance = Double.POSITIVE_INFINITY;
 	}
 	
 	@Override
@@ -63,5 +65,13 @@ public class Vertex implements IVertex {
 
 	public void setVisited(boolean visited) {
 		this.visited = visited;
+	}
+
+	public double getDistance() {
+		return distance;
+	}
+
+	public void setDistance(double d) {
+		this.distance = d;
 	}
 }
