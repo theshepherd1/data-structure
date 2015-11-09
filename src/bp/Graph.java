@@ -276,9 +276,11 @@ public class Graph implements IGraph, IGraph2 {
 				for (Edge e : visit.getEdges()) {
 					if (!e.isVisited()) {
 						Vertex v = visit.getID() == e.getVertex1().getID() ? e.getVertex2() : e.getVertex1();
-						s.push(v);
-						e.setVisited(true);
-						break;
+						if (canTraverse(visit, v, e)) {
+							s.push(v);
+							e.setVisited(true);
+							break;
+						}
 					}
 				}
 			} else {
