@@ -19,6 +19,8 @@ public class Edge implements IEdge {
 		v1.addEdge(this);
 		v2.addEdge(this);
 		setVisited(false);
+		setWeight(1);
+		setDirection(Direction.BOTH);
 	}
 	
 	public Edge(Vertex pV1, Vertex pV2, double pWeight) {
@@ -28,6 +30,7 @@ public class Edge implements IEdge {
 		v2.addEdge(this);
 		setVisited(false);
 		setWeight(pWeight);
+		setDirection(Direction.BOTH);
 	}
 	
 	public Edge(Vertex pV1, Vertex pV2, double pWeight, Direction pDirection) {
