@@ -2,6 +2,8 @@ package bp;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.PriorityQueue;
@@ -110,6 +112,18 @@ public class Graph implements IGraph, IGraph2 {
 			if (v.getEdges().isEmpty()) {
 				return false;
 			}
+			if (v.getDegree() != 0) {
+				return false;
+			}
+			boolean isIsolated = true;
+			for (Edge e : v.getEdges()) {
+				if (e.getDirection() != Direction.NEITHER) {
+					isIsolated = false;
+				}
+			}
+			if (isIsolated) {
+				return false;
+			}
 		}
 		clearVisited();		
 		if (vertices.get(0) != null) {
@@ -129,17 +143,10 @@ public class Graph implements IGraph, IGraph2 {
 			Vertex v1 = getVertexByID(pVertex1ID);
 			Vertex v2 = getVertexByID(pVertex2ID);
 			if (!v1.getEdges().isEmpty() && !v2.getEdges().isEmpty()) {
-				List<Edge> edges1 = v1.getEdges();
-				List<Edge> edges2 = v2.getEdges();
-				for (Edge e1 : edges1) {
-					for (Edge e2 : edges2) {
-						if (e1.equals(e2)) {
-							return true;
-						}
-					}
+				if (getSharedEdge(v1.getID(), v2.getID()) != null) {
+					return true;
 				}
 			}
-			
 		}
 		return false;
 	}
@@ -152,9 +159,9 @@ public class Graph implements IGraph, IGraph2 {
 				List<Character> temp = new ArrayList<Character>();
 				List<Edge> myEdges = myVertex.getEdges();
 				for (Edge e : myEdges) {
-					if (e.getVertex1() != null && !e.getVertex1().equals(myVertex) && !temp.contains(e.getVertex1().getID())) {
+					if (e.getVertex1() != null && !e.getVertex1().equals(myVertex) && !temp.contains(e.getVertex1().getID()) && canTraverse(myVertex, e.getVertex1(), e)) {
 						temp.add(Character.valueOf(e.getVertex1().getID()));
-					} else if (e.getVertex2() != null && !e.getVertex2().equals(myVertex) && !temp.contains(e.getVertex2().getID())) {
+					} else if (e.getVertex2() != null && !e.getVertex2().equals(myVertex) && !temp.contains(e.getVertex2().getID()) && canTraverse(myVertex, e.getVertex2(), e)) {
 						temp.add(Character.valueOf(e.getVertex2().getID()));
 					}
 				}
@@ -239,6 +246,9 @@ public class Graph implements IGraph, IGraph2 {
 			if ((v.getEdges().size()%2) != 0) {
 				return false;
 			}
+			if (v.getDegree() != 0) {
+				return false;
+			}
 		}
 		return true;
 	}
@@ -260,7 +270,7 @@ public class Graph implements IGraph, IGraph2 {
 		visitedCounter++;
 		char[] myVertexIds = getAdjacentVertices(source.getID());
 		for (char c : myVertexIds) {
-			if (getAdjacentVertices(c) != null && !getVertexByID(c).isVisited()) {
+			if (getAdjacentVertices(c) != null && !getVertexByID(c).isVisited() && canTraverse(getVertexByID(source.getID()), getVertexByID(c), getSharedEdge(c, source.getID()))) {
 				dfs(c);
 			}
 		}
@@ -290,28 +300,6 @@ public class Graph implements IGraph, IGraph2 {
 		}
 	}
 	
-	private boolean canTraverse(Vertex source, Vertex destination, Edge e) {
-		if (e.getDirection() == Direction.BOTH) {
-			return true;
-		}
-		if (e.getDirection() == Direction.NEITHER) {
-			return false;
-		}
-		if (e.getVertex1().getID() == source.getID() && e.getVertex2().getID() == destination.getID()) {
-			// source is Vertex1 and destination Vertex2
-			if (e.getDirection() == Direction.FORWARD) {
-				return true;
-			}
-		} 
-		if (e.getVertex2().getID() == source.getID() && e.getVertex1().getID() == destination.getID()) {
-			// source is Vertex2 and destination Vertex1
-			if (e.getDirection() == Direction.BACKWARD) {
-				return true;
-			}
-		}
-		return false;
-	}
-	
 	private boolean hasUnvisited(char id) {
 		Vertex v = getVertexByID(id);
 		for (Edge e : v.getEdges()) {
@@ -333,7 +321,7 @@ public class Graph implements IGraph, IGraph2 {
 			visitedCounter++;
 			char[] adjIds = getAdjacentVertices(visit.getID());
 			for (char adjId : adjIds) {
-				if (adjIds != null && getVertexByID(adjId).isVisited() == false) {
+				if (adjIds != null && getVertexByID(adjId).isVisited() == false && canTraverse(visit, getVertexByID(adjId), getSharedEdge(adjId, visit.getID()))) {
 					q.add(getVertexByID(adjId));
 					getVertexByID(adjId).setVisited(true);
 				}
@@ -464,50 +452,66 @@ public class Graph implements IGraph, IGraph2 {
 		clearVisited();
 		clearPath();
 		
-		List<Vertex> q = new ArrayList<Vertex>();
+		List<Vertex> q = new ArrayList<Vertex>(); 
 		List<Vertex> unvisitted = new ArrayList<Vertex>();
 		unvisitted.addAll(vertices);
 
 		Vertex start = getVertexByID(pVertex1ID);
 		start.setDistance(0);
 		q.add(start);
-		
-		while (!unvisitted.isEmpty()) {
+		while (!unvisitted.isEmpty() && !q.isEmpty()) {
 			Vertex current = q.remove(0);
+			current.setVisited(true);
+			unvisitted.remove(current);
 			for (char c : getAdjacentVertices(current.getID())) {
 				Vertex v = getVertexByID(c);
 				if (!v.isVisited()) {
 					q.add(v);
-					v.setVisited(true);
-					unvisitted.remove(v);
-					
 					double tempD = (current.getDistance() + getSharedEdge(current.getID(), v.getID()).getWeight());
-					double d = tempD < v.getDistance() ? tempD : v.getDistance();
-					v.setDistance(d);
+					if (tempD < v.getDistance()) {
+						v.setPrev(current);
+						v.setDistance(tempD);
+					}
+					Collections.sort(q, new Comparator<Vertex>() {
+						@Override
+						public int compare(Vertex o1, Vertex o2) {
+							return Double.compare(o1.getDistance(), o2.getDistance());
+						}
+					});
 				}
 			}
 		}
 		
-		clearVisited();
-		
-		Vertex end = getVertexByID(pVertex2ID);
-		Vertex temp = end;
-		path.add(pVertex2ID);
-		while (temp.getID() != start.getID()) {
-			Vertex shortest = getVertexByID(getAdjacentVertices(temp.getID())[0]);
-			for (char c : getAdjacentVertices(temp.getID())) {
-				Vertex v = getVertexByID(c);
-				if (!v.isVisited()) {
-					v.setVisited(true);
-					shortest = v.getDistance() < shortest.getDistance() ? v : shortest;
-				}
-			}
-			path.add(shortest.getID());
-			temp = shortest;
+		Vertex i = getVertexByID('F');
+		path.add(i.getID());
+		while (i.getPrev() != null) {
+			i = i.getPrev();
+			path.add(i.getID());
 		}
+		
+//		clearVisited();
+//		clearPath();
+//		
+//		Vertex end = getVertexByID(pVertex2ID);
+//		Vertex temp = end;
+//		path.add(pVertex2ID);
+//		while (temp.getID() != start.getID()) {
+//			Vertex shortest = getVertexByID(getAdjacentVertices(temp.getID())[0]);
+//			for (char c : getAdjacentVertices(temp.getID())) {
+//				Vertex v = getVertexByID(c);
+//				if (!v.isVisited()) {
+//					v.setVisited(true);
+//					if (getSharedEdge(c, temp.getID()).getWeight() + getVertexByID(c).getDistance() == temp.getDistance()) {
+//						shortest = getVertexByID(c);
+//					}
+//				}
+//			}
+//			path.add(shortest.getID());
+//			temp = shortest;
+//		}
 		return reverse(pathToCharArray());
 	}
-	
+		
 	private char[] reverse(char[] in) {
 		char[] out = new char[in.length];
 		for (int i = 0; i < in.length; i++) {
@@ -516,4 +520,31 @@ public class Graph implements IGraph, IGraph2 {
 		
 		return out;
 	}
+	///!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!DIRECTED GRAPHTS!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+
+	private boolean canTraverse(Vertex source, Vertex destination, Edge e) {
+		if (e.getDirection() == Direction.BOTH) {
+			return true;
+		}
+		if (e.getDirection() == Direction.NEITHER) {
+			return false;
+		}
+		if (e.getVertex1().getID() == source.getID() && e.getVertex2().getID() == destination.getID()) {
+			// source is Vertex1 and destination Vertex2
+			if (e.getDirection() == Direction.FORWARD) {
+				return true;
+			}
+		} 
+		if (e.getVertex2().getID() == source.getID() && e.getVertex1().getID() == destination.getID()) {
+			// source is Vertex2 and destination Vertex1
+			if (e.getDirection() == Direction.BACKWARD) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 }
+
+

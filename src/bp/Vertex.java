@@ -11,6 +11,7 @@ public class Vertex implements IVertex {
 	private List<Edge> edges = new ArrayList<Edge>();
 	private boolean visited = false;
 	private double distance;
+	private Vertex prev;
 	
 	public Vertex(char pID) {
 		id = pID;
@@ -73,5 +74,25 @@ public class Vertex implements IVertex {
 
 	public void setDistance(double d) {
 		this.distance = d;
+	}
+
+	public Vertex getPrev() {
+		return prev;
+	}
+
+	public void setPrev(Vertex prev) {
+		this.prev = prev;
+	}
+	
+	public int getDegree() {
+		int degree = 0;
+		for (Edge e : edges) {
+			if (e.getDirection() == Direction.FORWARD) {
+				degree--;
+			} else if (e.getDirection() == Direction.BACKWARD) {
+				degree++;
+			}
+		}
+		return degree;
 	}
 }
