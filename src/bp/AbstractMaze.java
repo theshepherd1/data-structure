@@ -171,6 +171,10 @@ public abstract class AbstractMaze {
 	 * to preview the grid that was passed to the program.
 	 */
 	public final void showMaze() {
+		showPath(null);
+	}
+
+	private void showPath(Object object) {
 		List<Integer> thePath = new ArrayList<>();
 		char[][] mazeToShow = new char[rows][columns];
 		for (int row = 0; row < rows; ++row) {
