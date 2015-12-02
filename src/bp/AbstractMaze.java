@@ -34,6 +34,10 @@ public abstract class AbstractMaze {
 	 * is a wall, and 1 is a walkable area. Player will start at the top left
 	 * and end at the bottom right.
 	 * 
+	 * 
+	 * 
+	 * 
+	 * 
 	 * @param pGrid
 	 *            The array with which to initialize the maze.
 	 */
@@ -167,10 +171,28 @@ public abstract class AbstractMaze {
 	 * to preview the grid that was passed to the program.
 	 */
 	public final void showMaze() {
-		for (int[] row : grid) {
-			System.out.println(Arrays.toString(row).replace("-1,", "X")
-					.replaceAll("-*1[\\,,\\]]", " ")
-					+ "]");
+		List<Integer> thePath = new ArrayList<>();
+		char[][] mazeToShow = new char[rows][columns];
+		for (int row = 0; row < rows; ++row) {
+			for (int column = 0; column < columns; ++column) {
+				switch (grid[row][column]) {
+				case -1:
+					mazeToShow[row][column] = 'X';
+					break;
+				case 1:
+					if (thePath.contains(row * columns + column)) {
+						mazeToShow[row][column] = '*';
+					} else {
+						mazeToShow[row][column] = ' ';
+					}
+					break;
+				default:
+					throw new IllegalArgumentException("Ahhhh!!!!!!!!!!!!!!!!");
+				}
+			}
+		}
+		for (char[] row : mazeToShow) {
+			System.out.println(Arrays.toString(row).replace(",", ""));
 		}
 	}
 
@@ -178,6 +200,7 @@ public abstract class AbstractMaze {
 	 * This doesn't belong in business logic, but wanted you to have a quick way
 	 * to preview the grid that was passed to the program as well as the a-star
 	 * path through it.
+	 * @param object 
 	 */
 	public final void showPath() {
 		List<Integer> thePath = getAStarPath();

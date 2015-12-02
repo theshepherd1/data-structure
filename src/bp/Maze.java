@@ -1,5 +1,6 @@
 package bp;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Maze extends AbstractMaze {
@@ -12,7 +13,7 @@ public class Maze extends AbstractMaze {
 	@Override
 	public List<Integer> getAStarPath() {
 		// TODO Auto-generated method stub
-		return null;
+		return new ArrayList();
 	}
 
 }
