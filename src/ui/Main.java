@@ -1,6 +1,7 @@
 package ui;
 
 import bp.Maze;
+
 import bp.PotentialPath;
 
 public class Main {
