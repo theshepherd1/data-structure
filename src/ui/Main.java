@@ -59,7 +59,7 @@ public class Main {
 				{ -1, 1, 1, -1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
 						1, 1, 1, 1, 1 }, };
 
-		Maze myMaze = new Maze(mazeToFindPath2, 5, 7);
+		Maze myMaze = new Maze(mazeToFindPath2, 0, 2);
 		myMaze.showMaze();
 		System.out.println();
 		myMaze.showPath();

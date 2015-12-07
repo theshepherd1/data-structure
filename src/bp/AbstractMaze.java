@@ -65,12 +65,11 @@ public abstract class AbstractMaze {
 		 * Cycle through each row and column assigning a unique number to the
 		 * numbered grid.
 		 */
-		for (int row = 0; row < rows; ++row) {
-			for (int column = 0; column < columns; ++column) {
-				hCost[row][column] = (rows - row) + (columns - column) - 2;
+		for (int row = 0; row < rows; row++) {
+			for (int column = 0; column < columns; column++) {
+				hCost[row][column] = Math.abs(grid.length - row) + Math.abs(grid[0].length - column);
 				numberedGrid[row][column] = number;
 				number++;
-				indecies.add(new Index<Integer>(row, column));
 			}
 		}
 		start = new Index(0, 0);
@@ -108,8 +107,8 @@ public abstract class AbstractMaze {
 		 * Cycle through each row and column assigning a unique number to the
 		 * numbered grid.
 		 */
-		for (int row = 0; row < rows; ++row) {
-			for (int column = 0; column < columns; ++column) {
+		for (int row = 0; row < rows; row++) {
+			for (int column = 0; column < columns; column++) {
 				hCost[row][column] = Math.abs(pFinish.getRow() - row) + Math.abs(pFinish.getCol() - column);
 				numberedGrid[row][column] = number;
 				number++;
@@ -149,12 +148,11 @@ public abstract class AbstractMaze {
 		 * Cycle through each row and column assigning a unique number to the
 		 * numbered grid.
 		 */
-		for (int row = 0; row < rows; ++row) {
-			for (int column = 0; column < columns; ++column) {
-				hCost[row][column] = (rows - row) + (columns - column) - 2;
+		for (int row = 0; row < rows; row++) {
+			for (int column = 0; column < columns; column++) {
+				hCost[row][column] = Math.abs(getRow(finishNum) - row) + Math.abs(getColumn(finishNum) - column);
 				numberedGrid[row][column] = number;
 				number++;
-				indecies.add(new Index<Integer>(row, column));
 			}
 		}
 		start = new Index(getRow(startNum), getColumn(startNum));
