@@ -1,8 +1,11 @@
 package bp;
 
 import java.util.ArrayList;
+import bp.Index;
 import java.util.Arrays;
 import java.util.List;
+import java.util.PriorityQueue;
+
 
 /**
  * This class handles the maze functionality. Maze will be passed a rectangular
@@ -28,6 +31,10 @@ public abstract class AbstractMaze {
 	/** A list of Potential Paths still being considered in path finding. */
 	protected List<PotentialPath> paths = new ArrayList<>();
 	protected int numberOfPotentialPathsConsidered;
+	
+	protected List<Index> indecies = new ArrayList<>();
+	
+	protected Index start, finish;
 
 	/**
 	 * Constructor. Make sure to hand the grid setup. The value -1 in the array
@@ -63,10 +70,98 @@ public abstract class AbstractMaze {
 				hCost[row][column] = (rows - row) + (columns - column) - 2;
 				numberedGrid[row][column] = number;
 				number++;
+				indecies.add(new Index<Integer>(row, column));
 			}
 		}
+		start = new Index(0, 0);
+		finish = new Index(rows-1, columns-1);
 	}
 
+	/**
+	 * Constructor. Make sure to hand the grid setup. The value -1 in the array
+	 * is a wall, and 1 is a walkable area. Player will start at the top left
+	 * and end at the bottom right.
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * @param pGrid
+	 *            The array with which to initialize the maze.
+	 * @param startRow
+	 * 				The row-index of start
+	 */
+	public AbstractMaze(final int[][] pGrid, Index<Integer> pStart, Index<Integer> pFinish) {
+		/** Set the grid. */
+		grid = pGrid.clone();
+		/** Precompute the h costs for easy access and speed. */
+		hCost = new int[grid.length][grid[0].length];
+		/** Populate the numbered grid with unique cell numbers. */
+		numberedGrid = new int[grid.length][grid[0].length];
+		/** Calculate the rows and set to the placeholder. */
+		rows = grid.length;
+		/** Calculate the columns and set to the placeholder. */
+		columns = grid[0].length;
+		/** Create a number placeholder for uniquely numbering the cells. */
+		int number = 0;
+		/**
+		 * Cycle through each row and column assigning a unique number to the
+		 * numbered grid.
+		 */
+		for (int row = 0; row < rows; ++row) {
+			for (int column = 0; column < columns; ++column) {
+				hCost[row][column] = Math.abs(pFinish.getRow() - row) + Math.abs(pFinish.getCol() - column);
+				numberedGrid[row][column] = number;
+				number++;
+			}
+		}
+		start = new Index(pStart.getRow(), pStart.getCol());
+		finish = new Index(pFinish.getRow(), pFinish.getCol());
+
+	}
+
+	/**
+	 * Constructor. Make sure to hand the grid setup. The value -1 in the array
+	 * is a wall, and 1 is a walkable area. Player will start at the top left
+	 * and end at the bottom right.
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * @param pGrid
+	 *            The array with which to initialize the maze.
+	 */
+	public AbstractMaze(final int[][] pGrid, int startNum, int finishNum) {
+		/** Set the grid. */
+		grid = pGrid.clone();
+		/** Precompute the h costs for easy access and speed. */
+		hCost = new int[grid.length][grid[0].length];
+		/** Populate the numbered grid with unique cell numbers. */
+		numberedGrid = new int[grid.length][grid[0].length];
+		/** Calculate the rows and set to the placeholder. */
+		rows = grid.length;
+		/** Calculate the columns and set to the placeholder. */
+		columns = grid[0].length;
+		/** Create a number placeholder for uniquely numbering the cells. */
+		int number = 0;
+		/**
+		 * Cycle through each row and column assigning a unique number to the
+		 * numbered grid.
+		 */
+		for (int row = 0; row < rows; ++row) {
+			for (int column = 0; column < columns; ++column) {
+				hCost[row][column] = (rows - row) + (columns - column) - 2;
+				numberedGrid[row][column] = number;
+				number++;
+				indecies.add(new Index<Integer>(row, column));
+			}
+		}
+		start = new Index(getRow(startNum), getColumn(startNum));
+		finish = new Index(getRow(finishNum), getColumn(finishNum));
+	}
+
+	
 	/**
 	 * Get the a-star path through the maze.
 	 * 
@@ -74,18 +169,6 @@ public abstract class AbstractMaze {
 	 *         numberedGrid) representing the path through the maze.
 	 */
 	public abstract List<Integer> getAStarPath();
-
-	/**
-	 * Get the column position of a particular cell number (zero based).
-	 * 
-	 * @param cellNumber
-	 *            The cell number (based on numberedGrid) to get the column
-	 *            position of.
-	 * @return The column position of the given cell.
-	 */
-	public final int getColumn(final int cellNumber) {
-		return cellNumber % columns;
-	}
 
 	/**
 	 * Get the F-Cost (G-Cost + H-Cost) of any node to the destination.
@@ -154,6 +237,18 @@ public abstract class AbstractMaze {
 	}
 
 	/**
+	 * Get the column position of a particular cell number (zero based).
+	 * 
+	 * @param cellNumber
+	 *            The cell number (based on numberedGrid) to get the column
+	 *            position of.
+	 * @return The column position of the given cell.
+	 */
+	public final int getColumn(final int cellNumber) {
+		return cellNumber % columns;
+	}
+	
+	/**
 	 * Is the position to check the target cell (lower right)?
 	 * 
 	 * @param pPositionToCheck
@@ -162,8 +257,8 @@ public abstract class AbstractMaze {
 	 * @return True if position to check is the final destination.
 	 */
 	protected final boolean isTarget(final int pPositionToCheck) {
-		return getRow(pPositionToCheck) == rows - 1
-				&& getColumn(pPositionToCheck) == columns - 1;
+		return getRow(pPositionToCheck) == finish.getRow()
+				&& getColumn(pPositionToCheck) == finish.getCol();
 	}
 
 	/**
@@ -189,6 +284,12 @@ public abstract class AbstractMaze {
 					} else {
 						mazeToShow[row][column] = ' ';
 					}
+					break;
+				case 2:
+					mazeToShow[row][column] = 'F';
+					break;
+				case 0:
+					mazeToShow[row][column] = 'S';
 					break;
 				default:
 					throw new IllegalArgumentException("Ahhhh!!!!!!!!!!!!!!!!");
@@ -221,6 +322,12 @@ public abstract class AbstractMaze {
 					} else {
 						mazeToShow[row][column] = ' ';
 					}
+					break;
+				case 2:
+					mazeToShow[row][column] = 'F';
+					break;
+				case 0:
+					mazeToShow[row][column] = 'S';
 					break;
 				default:
 					throw new IllegalArgumentException("Ahhhh!!!!!!!!!!!!!!!!");

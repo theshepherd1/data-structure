@@ -1,5 +1,6 @@
 package ui;
 
+import bp.Index;
 import bp.Maze;
 
 import bp.PotentialPath;
@@ -8,7 +9,13 @@ public class Main {
 
 	public static void main(String[] args) {
 		int[][] mazeToFindPath0 = new int[][] {
-				{1, -1, -1}, {1, 1, -1}, {-1, -1, 1}
+				{1, -1, -1}, {1, 1, 1}, {1, -1, 1}
+		};
+		int[][] mazeToFindPath1 = new int[][] {
+			{1, -1, -1, -1, -1}, {1, -1, 1, 1, 1}, {1, -1, 1, -1, 1}, {1, -1, 1, -1, 1}, {1, -1, 1, -1, 1}, {1, 1, 1, -1, 1}
+		};
+		int[][] mazeToFindPath3 = new int[][] {
+			{1, 1, 1, 1, 1}, {1, 1, 1, 1, 1}, {1, 1, 1, 1, 1}, {1, 1, 1, 1, 1}, {1, 1, 1, 1, 1}, {1, 1, 1, 1, 1}
 		};
 		int[][] mazeToFindPath2 = new int[][] {
 				{ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
@@ -52,9 +59,10 @@ public class Main {
 				{ -1, 1, 1, -1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
 						1, 1, 1, 1, 1 }, };
 
-		Maze myMaze = new Maze(mazeToFindPath0);
-
+		Maze myMaze = new Maze(mazeToFindPath2, 5, 7);
 		myMaze.showMaze();
+		System.out.println();
+		myMaze.showPath();
 		System.out.println("Number of potential paths considered: "
 				+ PotentialPath.getInstancesCreated());
 	}
