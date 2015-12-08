@@ -151,7 +151,7 @@ public abstract class AbstractMaze {
 		 */
 		for (int row = 0; row < rows; ++row) {
 			for (int column = 0; column < columns; ++column) {
-				hCost[row][column] = (rows - row) + (columns - column) - 2;
+				hCost[row][column] = Math.abs(getRow(finishNum) - row) + Math.abs(getColumn(finishNum) - column) - 2;
 				numberedGrid[row][column] = number;
 				number++;
 				indecies.add(new Index<Integer>(row, column));
