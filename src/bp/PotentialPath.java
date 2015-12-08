@@ -12,11 +12,22 @@ public class PotentialPath implements Comparable {
 
 	
 	//I believe that you should use hCost to order the paths
+//	@Override
+//	public int compareTo(Object pO) {
+//		if (hCost < ((PotentialPath) pO).hCost) {
+//			return -1;
+//		} else if (hCost > ((PotentialPath) pO).hCost) {
+//			return 1;
+//		} else {
+//			return 0;
+//		}
+//	}
+	
 	@Override
 	public int compareTo(Object pO) {
-		if (hCost < ((PotentialPath) pO).hCost) {
+		if (fCost < ((PotentialPath) pO).fCost) {
 			return -1;
-		} else if (hCost > ((PotentialPath) pO).hCost) {
+		} else if (fCost > ((PotentialPath) pO).fCost) {
 			return 1;
 		} else {
 			return 0;
