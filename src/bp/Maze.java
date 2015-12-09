@@ -54,24 +54,28 @@ public class Maze extends AbstractMaze {
 				pathList.add(numberedGrid[cRow - 1][cCol]);
 				PotentialPath newPP = new PotentialPath(pathList, getFCost(pathList), hCost[cRow - 1][cCol]);
 				paths.add(newPP);
+				closedList.add(numberedGrid[cRow - 1][cCol]);
 			}
 			if (!isWallDown(currentNum) && !closedList.contains(numberedGrid[cRow + 1][cCol])) {
 				pathList = potentialPath.getPotentialPathCopy();
 				pathList.add(numberedGrid[cRow + 1][cCol]);
 				PotentialPath newPP = new PotentialPath(pathList, getFCost(pathList), hCost[cRow + 1][cCol]);
 				paths.add(newPP);
+				closedList.add(numberedGrid[cRow + 1][cCol]);
 			}
 			if (!isWallLeft(currentNum) && !closedList.contains(numberedGrid[cRow][cCol - 1])) {
 				pathList = potentialPath.getPotentialPathCopy();
 				pathList.add(numberedGrid[cRow][cCol - 1]);
 				PotentialPath newPP = new PotentialPath(pathList, getFCost(pathList), hCost[cRow][cCol - 1]);
 				paths.add(newPP);
+				closedList.add(numberedGrid[cRow][cCol - 1]);
 			}
 			if (!isWallRight(currentNum) && !closedList.contains(numberedGrid[cRow][cCol + 1])) {
 				pathList = potentialPath.getPotentialPathCopy();
 				pathList.add(numberedGrid[cRow][cCol + 1]);
 				PotentialPath newPP = new PotentialPath(pathList, getFCost(pathList), hCost[cRow][cCol + 1]);
 				paths.add(newPP);
+				closedList.add(numberedGrid[cRow][cCol + 1]);
 			}
 			
 			System.out.println(PotentialPath.getInstancesCreated());
