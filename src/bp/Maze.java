@@ -73,6 +73,7 @@ public class Maze extends AbstractMaze {
 				PotentialPath newPP = new PotentialPath(pathList, getFCost(pathList), hCost[cRow][cCol + 1]);
 				paths.add(newPP);
 			}
+			
 			System.out.println(PotentialPath.getInstancesCreated());
 		}
 

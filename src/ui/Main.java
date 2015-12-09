@@ -60,7 +60,7 @@ public class Main {
 						1, 1, 1, 1, 1 }, };
 		//161
 		//499
-		Maze myMaze = new Maze(mazeToFindPath2, 0,499);
+		Maze myMaze = new Maze(mazeToFindPath2);
 		myMaze.showMaze();
 		System.out.println();
 		myMaze.showPath();
